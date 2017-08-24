@@ -54,11 +54,7 @@ public class ReflectionTest {
             System.out.println(e2);
 
 
-        } catch (NoSuchMethodException e1) {
-            e1.printStackTrace();
-        } catch (InstantiationException e2) {
-        } catch (IllegalAccessException e3) {
-        } catch (InvocationTargetException e4) {
+        } catch (Exception e1) {
         }
     }
 
