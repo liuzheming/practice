@@ -5,11 +5,11 @@ package thread.consumer;
  * <p>
  * Created by lzm on 2017/9/1.
  */
-public class Product {
+class Product {
 
     int id;
 
-    public Product(int id) {
+    Product(int id) {
         super();
         this.id = id;
     }

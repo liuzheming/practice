@@ -1,13 +1,11 @@
 package thread.consumer;
 
-import org.junit.Test;
-
 /**
  * Description:
  * <p>
  * Created by lzm on 2017/9/5.
  */
-public class ThreadTest {
+class ThreadTest {
 
 
     /**

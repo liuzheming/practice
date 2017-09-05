@@ -5,11 +5,11 @@ package thread.consumer;
  * <p>
  * Created by lzm on 2017/9/1.
  */
-public class Producer implements Runnable {
+class Producer implements Runnable {
 
     ProductBox productBox = null;
 
-    public Producer(ProductBox pb) {
+    Producer(ProductBox pb) {
         super();
         this.productBox = pb;
     }

@@ -5,7 +5,7 @@ package thread.consumer;
  * <p>
  * Created by lzm on 2017/9/1.
  */
-public class ProductBox {
+class ProductBox {
 
     Product[] productBox = new Product[6];
 

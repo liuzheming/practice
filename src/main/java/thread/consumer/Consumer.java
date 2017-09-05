@@ -5,7 +5,7 @@ package thread.consumer;
  * <p>
  * Created by lzm on 2017/9/5.
  */
-public class Consumer implements Runnable {
+class Consumer implements Runnable {
 
     ProductBox productBox = null;
 
