@@ -1,7 +1,7 @@
 package thread.consumer;
 
 /**
- * Description: 产品容器,将由多个线程所共享
+ * Description: 产品Box,将由多个线程所共享
  * <p>
  * Created by lzm on 2017/9/1.
  */
