@@ -76,18 +76,12 @@ public class MyArray {
         return size;
     }
 
-    /**
-     * 折半查找
-     */
-    public void search() {
-
-    }
 
     /**
-     * 下标验证
+     * 验证下标是否越界
      * 如果下标小于0或大于数组长度,则抛出异常
      *
-     * @param index 被检测的下标
+     * @param index 目标位置
      */
     private void checkIndex(int index) {
         if (index >= arr.length || index < 0) {
