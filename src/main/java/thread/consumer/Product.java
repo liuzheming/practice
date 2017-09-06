@@ -7,7 +7,7 @@ package thread.consumer;
  */
 class Product {
 
-    int id;
+    private int id;
 
     Product(int id) {
         super();

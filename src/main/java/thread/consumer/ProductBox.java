@@ -7,15 +7,22 @@ package thread.consumer;
  */
 class ProductBox {
 
-    Product[] productBox = new Product[6];
+    private Product[] productBox = new Product[6];
 
-    int index = 0;
+    private int index = 0;
 
-    public ProductBox() {
+    ProductBox() {
         super();
     }
 
-    public synchronized void push(Product p) {
+    /**
+     * 放入新增product:
+     * 1、box判满;
+     * 2、放入新的product
+     * 3、移动index
+     * 使用synchronized关键字保证这三步操作的原子性
+     */
+    synchronized void push(Product p) {
         while (index == productBox.length) {    // 如果box满了,则暂停生产
             try {
                 /*
@@ -36,7 +43,7 @@ class ProductBox {
         productBox[index++] = p;
     }
 
-    public synchronized Product pop() {
+    synchronized Product pop() {
         while (index == 0) {
             try {
                 this.wait();
