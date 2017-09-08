@@ -3,7 +3,7 @@ package dataStructure;
 import java.util.Arrays;
 
 /**
- * Description: 表
+ * Description: 数组
  * <p>
  * Created by lzm on 2017/9/4.
  */
@@ -76,6 +76,17 @@ public class MyArray {
         return size;
     }
 
+    /**
+     * 查找某个值在数组中的位置
+     */
+    public int search(long value) {
+        for (int i = 0; i < size; i++) {
+            if (arr[i] == value) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
     /**
      * 验证下标是否越界
@@ -84,7 +95,7 @@ public class MyArray {
      * @param index 目标位置
      */
     private void checkIndex(int index) {
-        if (index >= arr.length || index < 0) {
+        if (index >= size || index < 0) {
             throw new ArrayIndexOutOfBoundsException("数组下标越界 [index=" + index + "]");
         }
     }
