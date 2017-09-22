@@ -100,7 +100,7 @@ public class MyOrderArray {
         if (value < arr[0] || value > arr[size - 1]) {
             return -1;
         }
-        return search(value, 0, size());
+        return binarySearch(value, 0, size());
     }
 
     /**
@@ -117,14 +117,14 @@ public class MyOrderArray {
      * <p>
      * 最差时间复杂度:O(log2N)  当输入量很大时,比较节约时间
      * 假设共有N个元素,需要执行x次才能找到目标,最坏的情况是查找到最后一个元素时,
-     * 才能找到目标元素, 即 N / 2^x <= 1 => x<=log2N
+     * 才能找到目标元素, 即 N / 2^x = 1  => x=log2N
      *
      * @param value 目标
      * @param start 起始下标
      * @param end   终止下标
      * @return 目标在数组中的下标
      */
-    private int search(long value, int start, int end) {
+    private int binarySearch(long value, int start, int end) {
         long middle = arr[(start + end) / 2];
         if (middle == value) {
             return (start + end) / 2;
@@ -132,9 +132,9 @@ public class MyOrderArray {
             if (start >= end) {
                 return -1;
             } else if (middle > value) {
-                return search(value, start, (start + end) / 2 - 1);
+                return binarySearch(value, start, (start + end) / 2 - 1);
             } else {
-                return search(value, (start + end) / 2 + 1, end);
+                return binarySearch(value, (start + end) / 2 + 1, end);
             }
         }
     }
