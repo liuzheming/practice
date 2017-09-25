@@ -48,4 +48,50 @@ public class SimpleSort {
             }
         }
     }
+
+    /**
+     * 第一轮排序从数组的第二位开始
+     * 第二轮排序从数组的第三位开始,共进行n-1轮排序
+     * 每轮排序时,把指针指向的temp和它前面的数字依次进行比较
+     * 比较的结果,如果前面的值大于temp,则继续向前比较,直到前
+     * 面的的值小于temp时,将temp插入到此较小值的后面
+     */
+    public static void insertSort(Long[] arr) {
+        long temp;
+        for (int i = 1; i < arr.length; i++) {
+            temp = arr[i];
+            int index;
+            for (index = i - 1; index >= 0 && arr[index] > temp; index--) {
+                arr[index + 1] = arr[index];
+            }
+            arr[++index] = temp;
+        }
+    }
+
+    /**
+     * 选择排序
+     * 第一趟,把数组第一个元素和它后面最小的元素互换
+     * 第二趟,把数组第二个元素和它后面最小的元素互换
+     * 共进行n-1趟排序,排序进行的比较总次数为 (n-1) + (n-2) + ··· + 1 = n * n /2
+     */
+    public static void selectSort(Long[] arr) {
+
+        long temp;
+        int index;
+        for (int i = 0; i < arr.length - 1; i++) {
+            temp = arr[i];
+            index = i;
+            for (int j = i; j < arr.length; j++) {
+                //逐个和temp进行比较,发现更小的时,替换为temp值,并将新值的下标赋给index
+                if (temp > arr[j]) {
+                    temp = arr[j];
+                    index = j;
+                }
+            }
+            arr[index] = arr[i];
+            arr[i] = temp;
+        }
+
+    }
+
 }

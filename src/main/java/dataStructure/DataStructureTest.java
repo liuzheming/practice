@@ -47,17 +47,18 @@ public class DataStructureTest {
     }
 
     @Test
-    public void testBobbleSort() {
+    public void testSimpleSort() {
 
-        long[] arr = new long[]{1, 234, 555, 333, 33, 343, 121};
+        Long[] arr = new Long[]{1L, 234L, 555L, 333L, 33L, 343L, 121L};
 
 //        SimpleSort.bubbleSort(arr);
-        SimpleSort.bubbleSortDesc(arr);
+//        SimpleSort.insertSort(arr);
+        SimpleSort.selectSort(arr);
         //System.out.println(Arrays.asList(arr));  因为这个数组是基本类型数组,所以直接用asList方法会有问题
-
         for (int i = 0; i < arr.length; i++) {
             System.out.println(arr[i]);
         }
     }
+
 
 }
