@@ -56,7 +56,7 @@ public class MyOrderArray {
     /**
      * 删除某位上的元素,后面的元素依次向前移动一位
      */
-    public long delete(int index) {
+    public long remove(int index) {
         checkIndex(index);
         long item = arr[index];
         for (int i = index; i < size - 1; i++) {
