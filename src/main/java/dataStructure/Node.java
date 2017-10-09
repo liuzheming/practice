@@ -5,16 +5,16 @@ package dataStructure;
  * <p>
  * Created by lzm on 2017/9/26.
  */
-public class Node {
+public class Node<T> {
 
 
     private Node pre;
 
     private Node next;
 
-    private Object data;
+    private T data;
 
-    public Node(Object data) {
+    public Node(T data) {
         this.data = data;
     }
 
@@ -38,7 +38,7 @@ public class Node {
         return data;
     }
 
-    public void setValue(Object data) {
+    public void setValue(T data) {
         this.data = data;
     }
 
