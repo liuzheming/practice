@@ -14,23 +14,23 @@ public class MyQueue {
 
     private int end;
 
-    private int eleNum;
+    private int theSize;
 
     public MyQueue(int size) {
         arr = new long[size];
         front = 0;
         end = -1;
-        eleNum = 0;
+        theSize = 0;
     }
 
 
     public void insert(int value) {
         arr[++end] = value;
-        eleNum++;
+        theSize++;
     }
 
     public long remove() {
-        eleNum--;
+        theSize--;
         return arr[front++];
     }
 
@@ -39,11 +39,11 @@ public class MyQueue {
     }
 
     public boolean isEmpty() {
-        return eleNum == 0;
+        return theSize == 0;
     }
 
     public boolean isFull() {
-        return eleNum == arr.length;
+        return theSize == arr.length;
     }
 
 }
