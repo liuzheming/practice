@@ -106,15 +106,22 @@ public class MyArrayList<T> implements Iterable<T> {
             return current < size();
         }
 
+        private boolean okToRemove = false;
+
         public T next() {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
+            okToRemove = true;
             return theItems[current++];
         }
 
         public void remove() {
+            if (!okToRemove) {
+                throw new NoSuchElementException();
+            }
             MyArrayList.this.remove(--current);
+            okToRemove = false;
         }
     }
 
