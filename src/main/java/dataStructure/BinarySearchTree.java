@@ -1,7 +1,8 @@
 package dataStructure;
 
 /**
- * Description:
+ * Description:搜索二叉树,每个节点的左子树内任意节点,都要小于该节点;而每个子树的右子树内的任意节点
+ * 都要大于该节点
  * <p>
  * Created by lzm on 2017/10/12.
  */
@@ -83,6 +84,13 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
     /**
      * Internal method to find an item in a subTree.
+     * <p>
+     * 注意测试的顺序,
+     * 最重要的,首先必须要对是否空树进行测试,以避免出现空指针异常。
+     * 其次,剩下的测试中,应该把最不可能出现的情况,放在最后面进行。
+     * 另外,本例子中的递归调用时可以用一个while循环来代替的,这里使用了尾递归是合理的,
+     * 因为尽管算法表达式的简明行是以降低速度为代价的,但是这里所使用的栈空间的量也只不
+     * 过是 O(logN) 而已。
      *
      * @param x    is item to search for.
      * @param root the node that roots the subTree
@@ -104,6 +112,8 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
     /**
      * Internal method to insert into a subtree.
+     * 由于root引用该树的根,而根又在第一次插入数据时会发生改变,
+     * 所以insert被写成一个返回新树根的引用的方法。
      *
      * @param x    the item to insert.
      * @param root the node that root the subtree.
@@ -128,6 +138,11 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
     /**
      * Internal method to remove from a subtree
+     * <p>
+     * 有三种情况:
+     * 1、目标节点为叶子节点,直接删除。
+     * 2、目标节点只一颗子树,删除目标节点,并用将其子节点替换在目标节点的位置。
+     * 3、目标节点有两颗子树,删除目标节点,将其右子树中最小的节点替换到其位置上。
      *
      * @param x    the item to remove.
      * @param root the node that roots to the subtree.
