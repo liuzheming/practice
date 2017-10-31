@@ -7,7 +7,7 @@ import java.util.Arrays;
  * <p>
  * Created by lzm on 2017/9/26.
  */
-public class MyCycleQueue {
+public class MyCycleQueue<T> {
 
     private Long[] arr;
 
