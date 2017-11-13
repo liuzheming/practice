@@ -11,7 +11,8 @@ public class BlackRedBST<K extends Comparable<K>, V> {
 
 
     private Node root;
-
+    private static final boolean RED = true;
+    private static final boolean BLACK = true;
 
     public int size() {
         return size(root);
@@ -38,6 +39,7 @@ public class BlackRedBST<K extends Comparable<K>, V> {
 
     public void put(K key, V val) {
         root = put(key, val, root);
+        root.color = BLACK; // 根节点永远为黑色
     }
 
     private Node put(K key, V val, Node x) {
@@ -45,9 +47,50 @@ public class BlackRedBST<K extends Comparable<K>, V> {
         int cmp = key.compareTo(x.key);
         if (cmp > 0) x.right = put(key, val, x.right);
         else if (cmp < 0) x.left = put(key, val, x.left);
+        else x.val = val;
+
+        // 平衡操作,如果x右连接为红且左链接不为红,左旋
+        if (isRed(x.right) && !isRed(x.left)) x = rotateLeft(x);
+        // 如果连续两条向左的红链,则先右旋,再变色
+        if (isRed(x.left) && isRed(x.left.left)) x = rotateRight(x);
+        // 两个红色子节点,变色
+        if (isRed(x.right) && isRed(x.left)) flipColors(x);
+
         x.size = size(x);
         return x;
     }
+
+    private Node rotateLeft(Node x) {
+        Node temp = x.right;
+        x.color = RED;
+        temp.color = BLACK;
+        x.right = temp.left;
+        temp.left = x;
+        temp.size = x.size;
+        x.size = size(x);
+        return temp;
+    }
+
+    private Node rotateRight(Node x) {
+        Node temp = x.left;
+        x.color = RED;
+        temp.color = BLACK;
+        x.left = temp.right;
+        temp.right = x;
+        temp.size = x.size;
+        x.size = size(x);
+        return temp;
+    }
+
+    private void flipColors(Node x) {
+        x.left.color = x.right.color = BLACK;
+        x.color = RED;
+    }
+
+    private boolean isRed(Node x) {
+        return x.color == RED;
+    }
+
 
     public K max() {
         return root == null ? null : max(root).key;
@@ -84,27 +127,51 @@ public class BlackRedBST<K extends Comparable<K>, V> {
             return x;
     }
 
-    public void deleteMax() {
-        if (root != null) root = deleteMax(root);
-    }
-
-    private Node deleteMax(Node x) {
-        if (x.right == null) return x.left;
-        else x.right = deleteMax(x.right);
-        x.size = size(x);
+    private Node moveRedLeft(Node x) {
+        // 假设节点x为红色,x.right和x.right.left都是黑色
+        // 将x.right或者x.right的子节点之一变红
+        flipColors(x);
+        if (isRed(x.right.left)) {
+            x.right = rotateLeft(x.right);
+            x = rotateLeft(x);
+        }
         return x;
     }
 
     public void deleteMin() {
-        if (root != null) root = deleteMin(root);
+        if (!isRed(root.left) && !isRed(root.right))
+            root.color = RED;
+        root = deleteMin(root);
+        if (!isEmpty()) root.color = BLACK;
     }
 
     private Node deleteMin(Node x) {
-        if (x.left == null) return x.right;
-        else x.left = deleteMin(x.left);
+        if (x.left == null) return null;
+        if (!isRed(x.left) && !isRed(x.left.left))
+            x = moveRedLeft(x); // 向兄弟节点借一个元素,或者,把当前节点、父节点中最小的节点、兄弟节点中最近的节点进行合并
+        x.left = deleteMin(x.left);
+        return balance(x);
+    }
+
+    private Node balance(Node x) {
+        if (isRed(x.right)) x = rotateLeft(x);
+        if (isRed(x.right) && !isRed(x.left)) x = rotateLeft(x);
+        if (isRed(x.left) && isRed(x.left.left)) x = rotateRight(x);
+        if (isRed(x.left) && isRed(x.right)) flipColors(x);
         x.size = size(x);
         return x;
     }
+
+//    public void deleteMin() {
+//        if (root != null) root = deleteMin(root);
+//    }
+//
+//    private Node deleteMin(Node x) {
+//        if (x.left == null) return x.right;
+//        else x.left = deleteMin(x.left);
+//        x.size = size(x);
+//        return x;
+//    }
 
     public void delete(K key) {
         delete(key, root);
@@ -182,6 +249,10 @@ public class BlackRedBST<K extends Comparable<K>, V> {
         if (cmphi < 0) keys(lo, hi, x.right, list);
     }
 
+    public boolean isEmpty() {
+        return root == null;
+    }
+
     private class Node {
 
         private K key;
@@ -189,6 +260,7 @@ public class BlackRedBST<K extends Comparable<K>, V> {
         private Node left;
         private Node right;
         private int size = 1;
+        private boolean color = RED;
 
         private Node(K key, V val, Node left, Node right) {
             this.key = key;

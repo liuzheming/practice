@@ -89,7 +89,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
      * 最重要的,首先必须要对是否空树进行测试,以避免出现空指针异常。
      * 其次,剩下的测试中,应该把最不可能出现的情况,放在最后面进行。
      * 另外,本例子中的递归调用时可以用一个while循环来代替的,这里使用了尾递归是合理的,
-     * 因为尽管算法表达式的简明行是以降低速度为代价的,但是这里所使用的栈空间的量也只不
+     * 因为尽管算法表达式的简明性是以降低速度为代价的,但是这里所使用的栈空间的量也只不
      * 过是 O(logN) 而已。
      *
      * @param x    is item to search for.
@@ -97,17 +97,11 @@ public class BinarySearchTree<T extends Comparable<T>> {
      * @return dose the subtree contains the matched item.
      */
     private boolean contains(T x, BinaryNode<T> root) {
-        if (root == null) {
-            return false;
-        }
+        if (root == null) return false;
         int compareResult = x.compareTo(root.element);
-        if (compareResult < 0) {
-            return contains(x, root.left);
-        } else if (compareResult > 0) {
-            return contains(x, root.right);
-        } else {
-            return true;  // Match
-        }
+        if (compareResult < 0) return contains(x, root.left);
+        else if (compareResult > 0) return contains(x, root.right);
+        else return true;  // Match
     }
 
     /**
@@ -120,9 +114,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
      * @return the new root of the subtree.
      */
     private BinaryNode<T> insert(T x, BinaryNode<T> root) {
-        if (root == null) {
-            return new BinaryNode<>(x);
-        }
+        if (root == null) return new BinaryNode<>(x);
         int compareResult = x.compareTo(root.element);
         if (compareResult > 0) {
             root.right = insert(x, root.right);

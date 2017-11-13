@@ -2,9 +2,8 @@ package reflection;
 
 /**
  * <p>
- * Description: 
+ * Description:
  * </p>
- *
  */
 public class Employee {
 
@@ -113,4 +112,5 @@ public class Employee {
             return false;
         }
     }
+
 }

@@ -121,14 +121,11 @@ public class MyArrayList2<T> implements Iterable<T> {
      * @param newCapacity 新容量
      */
     private void ensureCapacity(int newCapacity) {
-        if (newCapacity <= size()) { // 如果新的容量小于集合的大小,则忽略此操作
-            return;
-        }
+        if (newCapacity <= size()) return; // 如果新的容量小于集合的大小,则忽略此操作
         // 如果新的容量大于现在的集合大小,则为theItems数组进行扩容
         T[] newArr = (T[]) new Object[newCapacity];
-        for (int i = 0; i < size(); i++) {
-            newArr[i] = theItems[i];
-        }
+        for (int i = 0; i < size(); i++) newArr[i] = theItems[i];
+
         theItems = newArr;
     }
 
@@ -163,9 +160,7 @@ public class MyArrayList2<T> implements Iterable<T> {
         @Override
         public T next() {
             checkExpectedModCount();
-            if (!hasNext()) {
-                throw new NoSuchElementException();
-            }
+            if (!hasNext()) throw new NoSuchElementException();
             okToRemove = true;
             return theItems[++current];
         }
@@ -173,12 +168,8 @@ public class MyArrayList2<T> implements Iterable<T> {
         @Override
         public void remove() {
             checkExpectedModCount();
-            if (!hasNext()) {
-                throw new NoSuchElementException();
-            }
-            if (!okToRemove) {
-                throw new IllegalStateException();
-            }
+            if (!hasNext()) throw new NoSuchElementException();
+            if (!okToRemove) throw new IllegalStateException();
             MyArrayList2.this.remove(current);
             expectedModCount++;
         }

@@ -58,6 +58,11 @@ public class BST<K extends Comparable<K>, V> {
     }
 
 
+    public void delete(K key) {
+
+    }
+
+
     private class Node {
 
         private K key;
@@ -102,8 +107,8 @@ public class BST<K extends Comparable<K>, V> {
         tree.put(5, "阿童木");
         tree.put(8, "太上老君");
         tree.put(4, "镇元大仙");
-        tree.put(34,"大黄蜂");
-        tree.put(22,"蜘蛛侠");
+        tree.put(34, "大黄蜂");
+        tree.put(22, "蜘蛛侠");
 
         System.out.println(tree.get(3));
         System.out.println(tree.get(5));

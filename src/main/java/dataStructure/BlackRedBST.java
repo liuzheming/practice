@@ -173,9 +173,9 @@ public class BlackRedBST<K extends Comparable<K>, V> {
         if (cmp > 0) x.right = delete(key, x.right);
         else if (cmp < 0) x.left = delete(key, x.left);
         else {
-            if (x.left == null) return x.right;
-            if (x.right == null) return x.left;
-            Node node = min(x.right);
+            if (x.left == null) return x.right;     // 只有右子树
+            if (x.right == null) return x.left;     // 只有左子树
+            Node node = min(x.right);               // 有两颗子树
             node.left = x.left;
             node.right = deleteMin(x.right);
             return node;
