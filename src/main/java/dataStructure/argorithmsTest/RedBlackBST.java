@@ -65,22 +65,37 @@ public class RedBlackBST<K extends Comparable<K>, V> {
     }
 
     private Node deleteMin(Node x) {
-        if (x.left == null) return null;
+        if (x.left == null)
+            return null;
+
         if (!isRed(x.left) && !isRed(x.left.left)) // 当前节点的左子节点不为RED,需要进行合并或者向它的兄弟借一个节点
             x.left = moveRedLeft(x.left);
+
         x.left = deleteMin(x.left);
+
         return balance(x);
     }
 
     public void deleteMax() {
         if (isEmpty()) throw new NoSuchElementException("BST underflow");
+        if (!isRed(root.left) && !isRed(root.right)) root.color = RED;
         root = deleteMax(root);
+        if (!isEmpty()) root.color = BLACK;
     }
 
     private Node deleteMax(Node x) {
-        if (x.right == null) return null;
+        if (isRed(x.left))
+            x = rotateRight(x);
+
+        if (x.right == null)
+            return null;
+
+        if (!isRed(x.right) && !isRed(x.right.left))
+            x = moveRedRight(x);
+
         x.right = deleteMax(x.right);
-        return x;
+
+        return balance(x);
     }
 
     private Node balance(Node x) {
@@ -96,6 +111,15 @@ public class RedBlackBST<K extends Comparable<K>, V> {
         if (isRed(x.right.left)) {
             x.right = rotateRight(x.right);
             x = rotateLeft(x);
+            flipColors(x);
+        }
+        return x;
+    }
+
+    private Node moveRedRight(Node x) {
+        flipColors(x);
+        if (isRed(x.left.left)) {
+            x = rotateRight(x);
             flipColors(x);
         }
         return x;
@@ -183,8 +207,6 @@ public class RedBlackBST<K extends Comparable<K>, V> {
             if (i % 10000 == 0) {
                 System.out.println("[i=" + i + "] [consume=" + (end - start) + "]");
             }
-
-
         }
 
         System.out.println(rbTree.height());

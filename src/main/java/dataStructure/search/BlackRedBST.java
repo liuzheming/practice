@@ -1,4 +1,6 @@
-package dataStructure;
+package dataStructure.search;
+
+import dataStructure.MyLinkedList;
 
 /**
  * Description:

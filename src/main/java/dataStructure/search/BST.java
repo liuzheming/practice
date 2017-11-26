@@ -1,4 +1,6 @@
-package dataStructure;
+package dataStructure.search;
+
+import dataStructure.MyArrayList;
 
 /**
  * Description: 本类中递归调用的思想: 传入一个节点,递归的方法将会返回此节点的新值
