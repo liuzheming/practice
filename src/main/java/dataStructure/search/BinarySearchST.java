@@ -3,6 +3,7 @@ package dataStructure.search;
 import dataStructure.MyArrayList;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Description:
@@ -16,8 +17,7 @@ public class BinarySearchST<K extends Comparable<K>, V> implements ST<K, V> {
 
     private V[] vals;
 
-    private int N;
-
+    private int n;
 
     public BinarySearchST(int capacity) {
         keys = (K[]) new Comparable[capacity];
@@ -26,52 +26,80 @@ public class BinarySearchST<K extends Comparable<K>, V> implements ST<K, V> {
 
     @Override
     public void put(K key, V val) {
-        if (keys.length == N) ensureCapacity(N * 2);
-        int before = rank(key);
-        if (before < N && keys[before].compareTo(key) == 0) {
-            vals[before] = val;
+        if (key == null) throw new IllegalArgumentException("first argument to put is null!");
+
+        if (val == null) {
+            delete(key);
             return;
         }
-        for (int i = N; i >= before; i--) {
+        int x = rank(key);
+        // key is already in table
+        if (x < n && keys[x].compareTo(key) == 0) {
+            vals[x] = val;
+            return;
+        }
+        // insert new key-val pair
+        if (keys.length == n) ensureCapacity(n * 2);
+        for (int i = n; i >= x; i--) {
             keys[i + 1] = keys[i];
             vals[i + 1] = vals[i];
         }
-        keys[before] = key;
-        vals[before] = val;
-        N++;
+        keys[x] = key;
+        vals[x] = val;
+        n++;
     }
 
     @Override
     public V get(K key) {
+        if (key == null) throw new IllegalArgumentException("argument to get() is null!");
+        if (isEmpty()) return null;
         int x = rank(key);
-        if (x > 0 && x < N) return vals[x];
+        if (x < n && keys[x].compareTo(key) == 0) return vals[x];
         else return null;
     }
 
     @Override
     public void delete(K key) {
+        if (key == null) throw new IllegalArgumentException("argument to delete() is null!");
+        if (isEmpty()) return;
 
+        // compute rank
+        int x = rank(key);
+        // 没找到
+        if (x == n || keys[x].compareTo(key) != 0) {
+            return;
+        }
+        // 找到了
+        for (int i = x; i < n - 1; i++) {
+            keys[i] = keys[i + 1];
+            vals[i] = vals[i + 1];
+        }
+        keys[n] = null;
+        vals[n] = null;
+        // 总数-1
+        n--;
+        if (n <= keys.length / 4) ensureCapacity(keys.length / 2);
     }
 
     @Override
     public boolean contains(K key) {
-        int x = rank(key);
-        return x > 0 && x < N;
+        if (key == null) throw new IllegalArgumentException("argument to contains() is null!");
+        return get(key) != null;
     }
 
     @Override
     public boolean isEmpty() {
-        return N == 0;
+        return n == 0;
     }
 
     @Override
     public int size() {
-        return N;
+        return n;
     }
 
     @Override
     public K max() {
-        return keys[N - 1];
+        return keys[n - 1];
     }
 
     @Override
@@ -81,19 +109,26 @@ public class BinarySearchST<K extends Comparable<K>, V> implements ST<K, V> {
 
     @Override
     public K floor(K key) {
+        if (key == null) throw new IllegalArgumentException("argument to floor() is null!");
         int x = rank(key);
-        return null;
+        if (x < n && keys[x].compareTo(key) == 0) return keys[x];
+        if (x == 0) return null;
+        else return keys[x - 1];
     }
 
     @Override
     public K ceiling(K key) {
-        return null;
+        if (key == null) throw new IllegalArgumentException("argument to ceiling() is null!");
+        int x = rank(key);
+        if (x == n) return null;
+        else return keys[x];
     }
 
     @Override
     public int rank(K key) {
+        if (key == null) throw new IllegalArgumentException("argument to rank() is null!");
         int mid, cmp;
-        int lo = 0, hi = N - 1;
+        int lo = 0, hi = n - 1;
         while (lo <= hi) {
             mid = (lo + hi) / 2;
             cmp = key.compareTo(keys[mid]);
@@ -117,16 +152,20 @@ public class BinarySearchST<K extends Comparable<K>, V> implements ST<K, V> {
 
     @Override
     public K select(int idx) {
+        if (idx <= 0 || idx >= size())
+            throw new IllegalArgumentException("called select() with invalid argument");
         return keys[idx];
     }
 
     @Override
     public void deleteMin() {
+        if (isEmpty()) throw new NoSuchElementException("Symbol table underflow error");
         delete(min());
     }
 
     @Override
     public void deleteMax() {
+        if (isEmpty()) throw new NoSuchElementException("Symbol table underflow error");
         delete(max());
     }
 
@@ -155,12 +194,11 @@ public class BinarySearchST<K extends Comparable<K>, V> implements ST<K, V> {
     }
 
     private void ensureCapacity(int newCapacity) {
-        if (newCapacity < N) return;
         K[] oldKeys = keys;
         V[] oldVals = vals;
         keys = (K[]) new Comparable[newCapacity];
         vals = (V[]) new Comparable[newCapacity];
-        for (int i = 0; i < N; i++) {
+        for (int i = 0; i < n; i++) {
             keys[i] = oldKeys[i];
             vals[i] = oldVals[i];
         }
