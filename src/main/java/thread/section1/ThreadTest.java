@@ -13,12 +13,10 @@ public class ThreadTest {
 //        test2();
 //        test3();
 //        test4();
-
-        Login a = new Login("a", "aaa");
-        Login b = new Login("b", "bbb");
-        new Thread(a).start();
-        new Thread(b).start();
-
+//        test5();
+//        test6();
+//        test7();
+        test8();
     }
 
 
@@ -85,5 +83,54 @@ public class ThreadTest {
         g.start();
 
     }
+
+
+    /**
+     * 非线程安全的示例
+     */
+    public static void test5() {
+        Login a = new Login("a", "aaa");
+        Login b = new Login("b", "bbb");
+        new Thread(a).start();
+        new Thread(b).start();
+    }
+
+
+    /**
+     * 打印当前线程示例
+     */
+    private static void test6() {
+        CountOperate co = new CountOperate();
+        Thread t1 = new Thread(co);
+        t1.setName("A");
+        t1.start();
+    }
+
+
+    private static void test7() {
+        Thread thread = new MyThread();
+        System.out.println("isAlive=" + thread.isAlive());
+        thread.start();
+        System.out.println("isAlive=" + thread.isAlive());
+    }
+
+
+    private static void test8() {
+
+        Thread thread = new MyThread();
+
+//        try {
+        thread.start();
+        thread.interrupt();
+        Thread.currentThread().interrupt();
+        System.out.println(Thread.interrupted());  //interrupted()方法表示查看线程是否被打断。
+        System.out.println(Thread.interrupted());
+
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
+    }
+
 
 }

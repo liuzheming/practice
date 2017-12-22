@@ -25,7 +25,7 @@ public class MyThread extends Thread {
 
     @Override
     synchronized public void run() {
-        run4();
+        run8();
     }
 
     public void run1() {
@@ -55,6 +55,18 @@ public class MyThread extends Thread {
     private void run4() {
         count--;
         System.out.println("Thread " + Thread.currentThread().getName() + " count " + count);
+    }
+
+
+    private void run5() {
+        System.out.println("run : isAlive=" + this.isAlive());
+        System.out.println(this.getName() + " " + this.getId());
+    }
+
+    private void run8() {
+        for (int i = 0; i < 500000; i++) {
+            System.out.println("i=" + i);
+        }
     }
 
 
