@@ -8,9 +8,24 @@ package thread.section1;
 public class MyThread extends Thread {
 
 
+    private int count = 0;
+
+    public MyThread() {
+        super();
+    }
+
+    public MyThread(String name) {
+        super(name);
+    }
+
+    public MyThread(String name, int i) {
+        this(name);
+        this.count = i;
+    }
+
     @Override
-    public void run() {
-        run2();
+    synchronized public void run() {
+        run4();
     }
 
     public void run1() {
@@ -26,8 +41,20 @@ public class MyThread extends Thread {
                 System.out.println("run=" + Thread.currentThread().getName());
             }
         } catch (InterruptedException e) {
-
         }
+    }
+
+
+    private void run3() {
+        while (count > 0) {
+            count--;
+            System.out.println("Thread " + Thread.currentThread().getName() + " count=" + count);
+        }
+    }
+
+    private void run4() {
+        count--;
+        System.out.println("Thread " + Thread.currentThread().getName() + " count " + count);
     }
 
 
