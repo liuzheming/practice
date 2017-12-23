@@ -1,4 +1,4 @@
-package thread.section1.stopThread;
+package thread.base.stopThread;
 
 /**
  * Description:

@@ -1,4 +1,4 @@
-package thread.section1.stopThread;
+package thread.base.stopThread;
 
 /**
  * Description: 用循环来配合break来停止线程,但是只能停止执行循环内的代码

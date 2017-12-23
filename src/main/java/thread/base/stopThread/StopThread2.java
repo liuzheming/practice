@@ -1,4 +1,4 @@
-package thread.section1.stopThread;
+package thread.base.stopThread;
 
 /**
  * Description:  循环配合异常法来停止线程,但可以停止try-catch块内的代码执行

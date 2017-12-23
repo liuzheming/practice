@@ -1,4 +1,4 @@
-package thread.section1;
+package thread.base;
 
 /**
  * Description:不论是Thread还是runnable形式的线程代码载体,都存在

@@ -1,4 +1,4 @@
-package thread.section1.stopThread;
+package thread.base.stopThread;
 
 /**
  * Description: interrupt() 配合 return 停止执行线程

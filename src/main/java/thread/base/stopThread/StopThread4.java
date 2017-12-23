@@ -1,4 +1,4 @@
-package thread.section1.stopThread;
+package thread.base.stopThread;
 
 /**
  * Description: 当已经被打上停止标记的线程,进入睡眠状态,会抛出异常,进而停止执行

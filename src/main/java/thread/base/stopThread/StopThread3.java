@@ -1,4 +1,4 @@
-package thread.section1.stopThread;
+package thread.base.stopThread;
 
 /**
  * Description: 沉睡中的线程如果被打上停止标记,会抛出异常,进而停止执行try-catch
