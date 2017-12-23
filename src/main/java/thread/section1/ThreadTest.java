@@ -16,7 +16,8 @@ public class ThreadTest {
 //        test5();
 //        test6();
 //        test7();
-        test8();
+//        test8();
+        test9();
     }
 
 
@@ -119,18 +120,32 @@ public class ThreadTest {
 
         Thread thread = new MyThread();
 
-//        try {
-        thread.start();
-        thread.interrupt();
-        Thread.currentThread().interrupt();
-        System.out.println(Thread.interrupted());  //interrupted()方法表示查看线程是否被打断。
-        System.out.println(Thread.interrupted());
+        try {
+            thread.start();
+            Thread.sleep(1000);
+            thread.interrupt();
+            System.out.println(Thread.interrupted());  //interrupted()方法表示查看线程是否被打断。
+            System.out.println(Thread.interrupted());
 
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("end!");
     }
 
+    private static void test9() {
+
+        Thread thread = new MyThread();
+
+        try {
+            thread.start();
+            Thread.sleep(2000);
+            thread.interrupt();
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("end!");
+    }
 
 }

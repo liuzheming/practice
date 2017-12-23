@@ -25,7 +25,7 @@ public class MyThread extends Thread {
 
     @Override
     synchronized public void run() {
-        run8();
+        run9();
     }
 
     public void run1() {
@@ -63,11 +63,38 @@ public class MyThread extends Thread {
         System.out.println(this.getName() + " " + this.getId());
     }
 
+
+    /**
+     * 测试使用标记来停止线程代码的执行,但是并不会停止线程
+     */
     private void run8() {
         for (int i = 0; i < 500000; i++) {
             System.out.println("i=" + i);
+            if (this.isInterrupted()) {
+                System.out.println("已标记为被打断,退出...");
+                break;
+            }
         }
+        System.out.println("我被输出,说明已经退出for循环,但是线程并未停止!");
     }
 
+    /**
+     * 测试使用标记退出线程代码的执行,抛出InterruptException,直接停止线程
+     */
+    private void run9() {
+        try {
+            for (int i = 0; i < 1000000; i++) {
+                System.out.println(i);
+                if (this.isInterrupted()) {
+                    throw new InterruptedException();
+                }
+            }
+            System.out.println("我在for循环外,如果我被打印,说明线程没有被停止!");
+        } catch (InterruptedException e) {
+            System.out.println("使用异常打断了线程");
+        }
+
+
+    }
 
 }
