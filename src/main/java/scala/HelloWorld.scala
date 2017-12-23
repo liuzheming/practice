@@ -26,7 +26,7 @@ object HelloWorld {
 
 
   def min2(m: Int, n: Int) = {
-//    m = m + 1  // m、n都是常量,不能再次被赋值
+    //    m = m + 1  // m、n都是常量,不能再次被赋值
 
   }
 
