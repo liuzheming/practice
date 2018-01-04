@@ -12,7 +12,7 @@ public class SynchronizedTest {
 
     public static void main(String... args) {
         HasSelfPrivateNum num = new HasSelfPrivateNum();
-        Thread threadA = new Thread(new ThreadA(num, "太上老君"));
+        Thread threadA = new Thread(new ThreadA(num));
         Thread threadB = new Thread(new ThreadB(num));
 
         threadA.start();

@@ -28,7 +28,7 @@ public class HasSelfPrivateNum implements Runnable {
         addI(username);
     }
 
-    public void addI(String username) {
+    synchronized public void addI(String username) {
         if (username == null) {
             throw new NullPointerException("username不能为空");
         }
@@ -36,13 +36,15 @@ public class HasSelfPrivateNum implements Runnable {
         try {
             if (username.equals("镇元大仙")) {
                 i = 100;
+                System.out.println("镇元大仙驾到!");
             } else if (username.equals("元始天尊")) {
                 i = 200;
+                System.out.println("元始天尊驾到!");
             }
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println(i);
+        System.out.println(username + " : " + i);
     }
 }
