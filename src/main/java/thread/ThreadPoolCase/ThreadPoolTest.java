@@ -21,7 +21,7 @@ public class ThreadPoolTest {
                 new ArrayBlockingQueue<>(10)
         );
 
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 30; i++)
             service.submit(() -> {
                 System.out.println("开始执行任务 : " + Thread.currentThread());
                 try {
