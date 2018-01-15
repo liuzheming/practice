@@ -36,10 +36,10 @@ public class HasSelfPrivateNum implements Runnable {
         try {
             if (username.equals("镇元大仙")) {
                 i = 100;
-                System.out.println("镇元大仙驾到!");
+                System.out.println("镇元大仙到!");
             } else if (username.equals("元始天尊")) {
                 i = 200;
-                System.out.println("元始天尊驾到!");
+                System.out.println("元始天尊到!");
             }
             Thread.sleep(2000);
         } catch (InterruptedException e) {
