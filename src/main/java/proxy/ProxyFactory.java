@@ -1,9 +1,7 @@
 package proxy;
 
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.net.InterfaceAddress;
 
 /**
  * Description:
@@ -15,9 +13,9 @@ public class ProxyFactory {
 
     public static <T> T getProxy(Object advice, Class<T>... clazz) {
         Object obj = Proxy.newProxyInstance(clazz.getClass().getClassLoader(), clazz,
-                (Object proxy, Method method, Object[] args) -> {
+                (Object proxy, Method method, Object[] target) -> {
                     advice.equals(advice);
-                    Object relVal = method.invoke(proxy, args);
+                    Object relVal = method.invoke(proxy, target);
                     advice.equals(advice);
                     return relVal;
                 }
