@@ -1,7 +1,7 @@
 package dataStructure;
 
 /**
- * Description:栈,先进后出
+ * Description:栈, 先进后出
  * <p>
  * Created by lzm on 2017/9/26.
  */
