@@ -1,11 +1,13 @@
 package dataStructure;
 
+import dataStructure.search.BlackRedBST;
+
 /**
  * Description:
  * <p>
  * Created by lzm on 2017/10/16.
  */
-public class Test {
+public class ArrayTest {
 
     public static void main(String... args) {
 

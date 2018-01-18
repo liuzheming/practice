@@ -1,17 +1,20 @@
 package dataStructure;
 
+import dataStructure.mylist.MyArrayList;
+import dataStructure.mylist.MyLinkedList2;
+import dataStructure.queue.MyCycleQueue;
+import dataStructure.sort.MyOrderArray;
+import dataStructure.sort.SimpleSort;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Iterator;
 
 /**
  * Description:
  * <p>
  * Created by lzm on 2017/9/5.
  */
-public class DataStructureTest {
+public class TreeTest {
 
     private int length = 100;
 
