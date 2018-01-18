@@ -46,13 +46,17 @@ public class PriorityQueue<T extends Comparable<T>> {
         //TODO 升序或是降序,由此处控制
         return pq[i].compareTo(pq[j]) > 0;
     }
-    
+
 
     public T delMin() {
         T t = pq[1];
         pq[1] = pq[size];
         pq[size--] = null;
         sink(1);
+        if (size < pq.length / 4) {
+            ensureCapacity(pq.length / 2);
+            System.out.println("缩容一次");
+        }
         return t;
     }
 
