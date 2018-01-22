@@ -1,4 +1,4 @@
-package dataStructure;
+package dataStructure.mylist;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;

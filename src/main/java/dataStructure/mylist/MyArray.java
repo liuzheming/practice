@@ -1,4 +1,4 @@
-package dataStructure;
+package dataStructure.mylist;
 
 import java.util.Arrays;
 
