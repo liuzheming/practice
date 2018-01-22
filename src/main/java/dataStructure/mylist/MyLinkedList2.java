@@ -27,6 +27,7 @@ public class MyLinkedList2<T> implements Iterable<T> {
         return theSize;
     }
 
+
     public boolean isEmpty() {
         return size() == 0;
     }
