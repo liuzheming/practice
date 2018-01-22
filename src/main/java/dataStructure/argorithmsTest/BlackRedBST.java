@@ -1,6 +1,6 @@
 package dataStructure.argorithmsTest;
 
-import dataStructure.MyArrayList;
+import dataStructure.mylist.MyArrayList;
 
 /**
  * Description:红黑二叉树
