@@ -1,9 +1,9 @@
-package dataStructure;
+package dataStructure.sort;
 
 import java.util.Arrays;
 
 /**
- * Description: 有序数组
+ * Description: 有序数组,可以作为优先队列的简单实现
  * <p>
  * Created by lzm on 2017/9/6.
  */
