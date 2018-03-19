@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.ultra.uam.inspect.location.LocationMapper">
+
+
+    <!-- 嵌套查询：-->
+    <!--<select id="findByAppKey" parameterType="string" resultMap="AppDetail">-->
+    <!--SELECT * FROM app_info a LEFT JOIN url_filter u  ON u.app_info_id=a.app_info_id WHERE appKey=#{appKey};-->
+    <!--</select>-->
+
+
+    <!-- 嵌套查询：-->
+    <select id="getAll" resultType="com.ultra.uam.inspect.location.Location">
+        SELECT
+			id 					AS provinceId,
+			areaname			AS province,
+			cityName 			AS city,
+			districtName 		AS district,
+			townName 			AS town,
+			city.lng			AS longitude,
+			city.lat			AS latitude
+		FROM
+			area_info
+			RIGHT JOIN (
+			SELECT
+				id AS cityId,
+				parentid AS cityParentId,
+				areaname AS cityName,
+				districtName,
+				townName,
+				district.lng,
+				district.lat
+			FROM
+				area_info
+				RIGHT JOIN (
+				SELECT
+					id AS districtId,
+					parentid AS districtParentId,
+					areaname AS districtName,
+					townName AS townName,
+					town.lng AS lng,
+					town.lat AS lat
+				FROM
+					area_info
+					RIGHT JOIN ( SELECT id townId, areaname townName, parentid townParentId, lng, lat FROM area_info WHERE LEVEL = '4' ) town ON town.townParentId = id
+				) district ON district.districtParentId = id
+			) city ON city.cityParentId = id;
+    </select>
+
+</mapper>
