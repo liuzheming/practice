@@ -1,6 +1,7 @@
 package dataStructure.search;
 
-import dataStructure.MyArrayList;
+
+import dataStructure.mylist.MyArrayList;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

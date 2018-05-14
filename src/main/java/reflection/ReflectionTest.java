@@ -1,8 +1,6 @@
 package reflection;
 
 
-import org.junit.Test;
-
 import java.lang.reflect.Constructor;
 
 /**
@@ -58,7 +56,7 @@ public class ReflectionTest {
     }
 
 
-    @Test
+    //    @Test
     public void testReflection() {
 
 
