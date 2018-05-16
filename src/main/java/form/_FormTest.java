@@ -4,6 +4,12 @@ import form.definition.FieldDefinition;
 import form.definition.FormDefinition;
 import org.junit.Test;
 
+
+/**
+ * 1、怎么解字段入库的问题
+ * 2、怎么解决权限控制的问题
+ * 3、怎么解决field格式验证的问题
+ */
 public class _FormTest {
 
     private FormDefController formDefcontroller = new FormDefController();
@@ -64,8 +70,6 @@ public class _FormTest {
 
     public void submitFormInst() {
 
-
-        
 
     }
 
