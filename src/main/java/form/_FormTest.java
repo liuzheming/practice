@@ -12,7 +12,7 @@ import org.junit.Test;
  */
 public class _FormTest {
 
-    private FormDefController formDefcontroller = new FormDefController();
+    private FormDefManager formDefMgr = new FormDefManager();
 
     @Test
     public void prepareFormDef() {
@@ -63,9 +63,9 @@ public class _FormTest {
         formDef.addFieldDef(field_email);
         formDef.addFieldDef(field_age);
 
-        formDefcontroller.addFormDef(formDef);
+        formDefMgr.addFormDef(formDef);
 
-        System.out.println(formDefcontroller.queryPage());
+        System.out.println(formDefMgr.queryPage());
     }
 
     public void submitFormInst() {
