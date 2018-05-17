@@ -10,9 +10,9 @@ import java.util.Map;
 
 
 /**
- * 1、怎么解字段入库的问题
- * 2、怎么解决权限控制的问题
- * 3、怎么解决field格式验证的问题
+ * 1、怎么解字段入库的问题  ，用了最笨的办法，硬编码
+ * 2、怎么解决权限控制的问题    TODO
+ * 3、怎么解决field格式验证的问题   TODO
  */
 public class _FormTest {
 
