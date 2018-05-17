@@ -1,12 +1,12 @@
 package form;
 
-import form.definition.FieldDefinition;
-import form.definition.FormDefinition;
-
 public class FormController {
 
+    public FormController(FormDefManager fdm) {
+        this.formService = new GenericFormService(fdm);
+    }
 
-    private FormService formService = new GenericFormService();
+    private FormService formService;
 
     /**
      * 暂时默认被提交的form数据格式都是正确的，不要要验证
@@ -16,6 +16,7 @@ public class FormController {
     public void submit(FormInstance formInst) {
 
 //        FormDefinition formDef = formDefController.getById(formInst.getFormDefId());
+
 
         formService.verifyForm(formInst);
 

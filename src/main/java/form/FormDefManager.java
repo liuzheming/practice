@@ -22,12 +22,12 @@ public class FormDefManager {
     }
 
     public List<FormDefinition> queryPage() {
-        return this.FORM_DEF_LIST;
+        return FORM_DEF_LIST;
     }
 
     public FormDefinition getById(int id) {
         FormDefinition formDef = null;
-        for (FormDefinition def : this.FORM_DEF_LIST) {
+        for (FormDefinition def : FORM_DEF_LIST) {
             if (def.getId() == id) formDef = def;
         }
         return formDef;

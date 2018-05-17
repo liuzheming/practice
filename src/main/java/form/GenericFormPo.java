@@ -1,43 +1,47 @@
 package form;
 
+import java.sql.Timestamp;
+
 public class GenericFormPo {
 
     // 表单字段
-    private String requestName; // 姓名   必填
-    private String phone;       // 电话   必填
-    private String email;       // 邮箱   必填
-    private String company;
-    private String department;
-    private String JobTitle;
-    private String industry;    // 行业
-    private String question;    // 问题
-    private String city;
-    private String purpose;
-    private String headCount;
+
+//    private String company;
+//    private String department;
+//    private String jobTitle;
+//    private String industry;    // 行业
+//    private String question;    // 问题
+//    private String city;
+//    private String purpose;
+//    private String headCount;
 
     // 访客信息收集 如果能采集得到，都要填写
+
+    private String name;     // 姓名   必填
+    private String phone;           // 电话   必填
+    private String email;           // 邮箱   必填
     private String pageTitle;       // 页面标题
     private String pageURL;         // 页面URL
     private String referrerURL;     // 进入京东云网站之前的网站链接
     private String referrerDomain;  // 进入京东云网站之前的网站域名
     private String campaignCode;    // 活动标识
     private String userIP;          // 用户IP
-    private String createTime;      // 创建时间
     private String deviceType;      // 用户使用的设备类型
     private String userAgent;       // HTTP请求的用户代理头
     private String isWillingToContact;  // 是否有沟通意愿
     private String jdCloudAccount;  // 京东账号
+    private Timestamp createTime;      // 创建时间
 
     // other
     private String others;
 
 
-    public String getRequestName() {
-        return requestName;
+    public String getName() {
+        return name;
     }
 
-    public void setRequestName(String requestName) {
-        this.requestName = requestName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPhone() {
@@ -54,70 +58,6 @@ public class GenericFormPo {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getCompany() {
-        return company;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
-    }
-
-    public String getJobTitle() {
-        return JobTitle;
-    }
-
-    public void setJobTitle(String jobTitle) {
-        JobTitle = jobTitle;
-    }
-
-    public String getIndustry() {
-        return industry;
-    }
-
-    public void setIndustry(String industry) {
-        this.industry = industry;
-    }
-
-    public String getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getPurpose() {
-        return purpose;
-    }
-
-    public void setPurpose(String purpose) {
-        this.purpose = purpose;
-    }
-
-    public String getHeadCount() {
-        return headCount;
-    }
-
-    public void setHeadCount(String headCount) {
-        this.headCount = headCount;
     }
 
     public String getPageTitle() {
@@ -168,11 +108,11 @@ public class GenericFormPo {
         this.userIP = userIP;
     }
 
-    public String getCreateTime() {
+    public Timestamp getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(String createTime) {
+    public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
 
@@ -218,30 +158,22 @@ public class GenericFormPo {
 
     @Override
     public String toString() {
-        return "GenericFormPo{" +
-                "requestName='" + requestName + '\'' +
-                ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
-                ", company='" + company + '\'' +
-                ", department='" + department + '\'' +
-                ", JobTitle='" + JobTitle + '\'' +
-                ", industry='" + industry + '\'' +
-                ", question='" + question + '\'' +
-                ", city='" + city + '\'' +
-                ", purpose='" + purpose + '\'' +
-                ", headCount='" + headCount + '\'' +
-                ", pageTitle='" + pageTitle + '\'' +
-                ", pageURL='" + pageURL + '\'' +
-                ", referrerURL='" + referrerURL + '\'' +
-                ", referrerDomain='" + referrerDomain + '\'' +
-                ", campaignCode='" + campaignCode + '\'' +
-                ", userIP='" + userIP + '\'' +
-                ", createTime='" + createTime + '\'' +
-                ", deviceType='" + deviceType + '\'' +
-                ", userAgent='" + userAgent + '\'' +
-                ", isWillingToContact='" + isWillingToContact + '\'' +
-                ", jdCloudAccount='" + jdCloudAccount + '\'' +
-                ", others='" + others + '\'' +
-                '}';
+        return "    GenericFormPo{" + "\r\n" +
+                "       requestName=" + name + "\r\n" +
+                ",      phone=" + phone + "\r\n" +
+                ",      email=" + email + "\r\n" +
+                ",      pageTitle=" + pageTitle + "\r\n" +
+                ",      pageURL=" + pageURL + "\r\n" +
+                ",      referrerURL=" + referrerURL + "\r\n" +
+                ",      referrerDomain=" + referrerDomain + "\r\n" +
+                ",      campaignCode=" + campaignCode + "\r\n" +
+                ",      userIP=" + userIP + "\r\n" +
+                ",      createTime=" + createTime + "\r\n" +
+                ",      deviceType=" + deviceType + "\r\n" +
+                ",      userAgent=" + userAgent + "\r\n" +
+                ",      isWillingToContact=" + isWillingToContact + "\r\n" +
+                ",      jdCloudAccount=" + jdCloudAccount + "\r\n" +
+                ",      others=" + others + "\r\n" +
+                "       }";
     }
 }

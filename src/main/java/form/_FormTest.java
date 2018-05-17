@@ -2,7 +2,11 @@ package form;
 
 import form.definition.FieldDefinition;
 import form.definition.FormDefinition;
+import org.junit.After;
 import org.junit.Test;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -20,7 +24,8 @@ public class _FormTest {
         FormDefinition formDef = new FormDefinition();
         formDef.setName("弼马温入职表");
         formDef.setDesc("入职弼马温需签署的文件");
-        formDef.setId((int) (Math.random() * 100));
+//        formDef.setId((int) (Math.random() * 100));
+        formDef.setId(100);
 
         // 姓名
         FieldDefinition field_name = new FieldDefinition();
@@ -68,9 +73,18 @@ public class _FormTest {
         System.out.println(formDefMgr.queryPage());
     }
 
+    @After
     public void submitFormInst() {
-
-
+        FormInstance formInst = new FormInstance();
+        formInst.setFormDefId(100);
+        Map<String, Object> formData = new HashMap<>();
+        formData.put("name", "孙悟空");
+        formData.put("phone", "110");
+        formData.put("email", "sun_0006@126.com");
+        formData.put("age", 800);
+        formInst.setFormData(formData);
+        FormController formController = new FormController(formDefMgr);
+        formController.submit(formInst);
     }
 
     public void mainTest(String... args) {
