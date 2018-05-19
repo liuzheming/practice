@@ -14,10 +14,23 @@ public class FieldDefinition {
 
     private String pattern;
 
+    private boolean allowEmpty;
+
     private int isStandard;     // 是否标准字段
 
     private String desc;
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean isAllowEmpty() {
+        return allowEmpty;
+    }
+
+    public void setAllowEmpty(boolean allowEmpty) {
+        this.allowEmpty = allowEmpty;
+    }
 
     public String getDesc() {
         return desc;

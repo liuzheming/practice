@@ -6,7 +6,10 @@ import form.definition.FieldDefinition;
 import form.definition.FormDefinition;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class GenericFormService implements FormService {
 
@@ -20,8 +23,33 @@ public class GenericFormService implements FormService {
     }
 
     @Override
-    public void verifyForm(FormInstance formInst) {
+    public boolean verifyForm(FormInstance formInst) throws RuntimeException {
+        FormDefinition formDefinition =
+                formDefMgr.getById(formInst.getFormDefId());
 
+        List<FieldDefinition> list = formDefinition.getFieldDefList();
+
+        // 只支持对部分String、Integer数据的格式验证
+        for (FieldDefinition fd : list) {
+            switch (fd.getDataType()) {
+                case "String_":
+                    String strVal = (String) formInst.getFormData().get(fd.getName());
+                    // email
+                    if (FormPattern.PATTERN_MAP.containsKey(fd.getPattern())) {
+                        Pattern pattern = Pattern.compile(FormPattern.PATTERN_MAP.get(fd.getPattern()));
+                        Matcher matcher = pattern.matcher(strVal);
+                        System.out.println("是否符合格式: " + fd.getName() + " --- " + fd.getPattern() + " --- " + matcher.matches());
+                        if (!matcher.matches()) throw new RuntimeException("参数不合规:[" + fd.getName() + "]");
+                    }
+                    System.out.println("String_类型参数" + fd.getName() + "=" + strVal);
+                    break;
+                case "int_":
+                    int intVal = (int) formInst.getFormData().get(fd.getName());
+                    System.out.println("int_类型参数" + fd.getName() + "=" + intVal);
+                    break;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -96,6 +124,8 @@ public class GenericFormService implements FormService {
         System.out.println("==================准备GenericFormPo结束==================");
         System.out.println(formPo);
         System.out.println("==================准备GenericFormPo结束==================");
+
+        _FormTest.FORM_INST_LIST.add(formPo);
 
     }
 }

@@ -13,12 +13,16 @@ public class FormController {
      *
      * @param formInst 表单实例
      */
-    public void submit(FormInstance formInst) {
+    public String submit(FormInstance formInst) {
 
 //        FormDefinition formDef = formDefController.getById(formInst.getFormDefId());
 
 
-        formService.verifyForm(formInst);
+        try {
+            formService.verifyForm(formInst);
+        } catch (RuntimeException e) {
+            return e.getMessage();
+        }
 
         formService.saveForm(formInst);
 
@@ -29,7 +33,7 @@ public class FormController {
 ////         非标准化字段，拼接后填充
 //        }
 
-
+        return "success";
     }
 
 }
