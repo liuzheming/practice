@@ -1,24 +1,35 @@
 package form;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import form.definition.FieldDefinition;
 import form.definition.FormDefinition;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 
 
 /**
  * 1、怎么解字段入库的问题  ，用了最笨的办法，硬编码
- * 2、怎么解决权限控制的问题    TODO
- * 3、怎么解决field格式验证的问题   TODO
+ * 2、怎么解决权限控制的问题    在formDef增加status字段
+ * 3、怎么解决field格式验证的问题   TODO 只支持String类型
  */
 public class _FormTest {
 
     private FormDefManager formDefMgr = new FormDefManager();
+    private FormController formController = new FormController(formDefMgr);
+    public static List<GenericFormPo> FORM_INST_LIST = new ArrayList<>();
+    private ObjectMapper objectMapper = new ObjectMapper();
 
-    @Test
+    @Before
     public void prepareFormDef() {
 
         FormDefinition formDef = new FormDefinition();
@@ -43,6 +54,7 @@ public class _FormTest {
         field_phone.setName("phone");
         field_phone.setDataType("String_");
         field_phone.setIsStandard(1);
+        field_phone.setPattern("phone");
         field_phone.setFormDef(formDef);
 
         // 邮箱
@@ -52,6 +64,7 @@ public class _FormTest {
         field_email.setName("email");
         field_email.setDataType("String_");
         field_email.setIsStandard(1);
+        field_email.setPattern("email");
         field_email.setFormDef(formDef);
 
         // 年龄
@@ -63,28 +76,105 @@ public class _FormTest {
         field_age.setIsStandard(1);
         field_age.setFormDef(formDef);
 
+        // 公司
+        FieldDefinition field_company = new FieldDefinition();
+        field_company.setDesc("公司名称");
+        field_company.setLabel("company");
+        field_company.setName("company");
+        field_company.setDataType("String_");
+//        field_age.setIsStandard(1);
+        field_company.setFormDef(formDef);
+
+
+        // 年龄
+        FieldDefinition field_married = new FieldDefinition();
+        field_married.setDesc("员工年龄");
+        field_married.setLabel("married");
+        field_married.setName("married");
+        field_married.setDataType("String_");
+        field_married.setIsStandard(1);
+        field_married.setFormDef(formDef);
+
+
+        // 年龄
+        FieldDefinition field_address = new FieldDefinition();
+        field_address.setDesc("地址");
+        field_address.setLabel("address");
+        field_address.setName("address");
+        field_address.setDataType("String_");
+        field_address.setIsStandard(1);
+        field_address.setFormDef(formDef);
+
+
         formDef.addFieldDef(field_name);
         formDef.addFieldDef(field_phone);
         formDef.addFieldDef(field_email);
         formDef.addFieldDef(field_age);
+        formDef.addFieldDef(field_company);
+        formDef.addFieldDef(field_married);
+        formDef.addFieldDef(field_address);
+
 
         formDefMgr.addFormDef(formDef);
 
         System.out.println(formDefMgr.queryPage());
     }
 
-    @After
+    @Test
     public void submitFormInst() {
         FormInstance formInst = new FormInstance();
         formInst.setFormDefId(100);
         Map<String, Object> formData = new HashMap<>();
         formData.put("name", "孙悟空");
-        formData.put("phone", "110");
+        formData.put("phone", "18533336666");
         formData.put("email", "sun_0006@126.com");
         formData.put("age", 800);
+        formData.put("company", "oracle");
+        formData.put("married", "yes");
+        formData.put("address", "朝阳区，北辰世纪中心A座");
         formInst.setFormData(formData);
-        FormController formController = new FormController(formDefMgr);
-        formController.submit(formInst);
+//        FormController formController = new FormController(formDefMgr);
+
+
+        try {
+            System.out.println("打印JSON参数：");
+            System.out.println(objectMapper.writeValueAsString(formInst));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        System.out.println("submit结束:" + formController.submit(formInst));
+    }
+
+    @After
+    public void printForm() {
+
+        //
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        for (GenericFormPo po : FORM_INST_LIST) {
+            try {
+                BeanInfo info = Introspector.getBeanInfo(GenericFormPo.class);
+                PropertyDescriptor[] pds = info.getPropertyDescriptors();
+                Map<String, Object> bean = new LinkedHashMap<>();
+                for (PropertyDescriptor pd : pds) {
+                    System.out.println("调用getter方法: " + pd.getName() + "=" + pd.getReadMethod().invoke(po));
+                    if ("others".equals(pd.getName())) {
+                        String jsonStr = (String) pd.getReadMethod().invoke(po);
+                        Map other = objectMapper.readValue(jsonStr, Map.class);
+                        bean.putAll(other);
+                    } else bean.put(pd.getName(), pd.getReadMethod().invoke(po));
+                }
+                list.add(bean);
+            } catch (IntrospectionException | InvocationTargetException | IllegalAccessException | IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
+        System.out.println("打印已保存的表单：");
+        System.out.println(list);
+
     }
 
     public void mainTest(String... args) {
