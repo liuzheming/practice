@@ -4,7 +4,7 @@ public class FieldDefinition {
 
     private int id;
 
-    private FormDefinition formDef;
+    private int formDefId;
 
     private String name;    // 唯一标识符
 
@@ -48,12 +48,12 @@ public class FieldDefinition {
         this.id = id;
     }
 
-    public FormDefinition getFormDef() {
-        return formDef;
+    public int getFormDefId() {
+        return formDefId;
     }
 
-    public void setFormDef(FormDefinition formDef) {
-        this.formDef = formDef;
+    public void setFormDefId(int formDefId) {
+        this.formDefId = formDefId;
     }
 
     public String getName() {
@@ -100,7 +100,7 @@ public class FieldDefinition {
     public String toString() {
         return "FieldDefinition{" +
                 "id=" + id +
-                ", formDef=" + formDef.getName() +
+                ", formDef=" + formDefId +
                 ", name='" + name + '\'' +
                 ", label='" + label + '\'' +
                 ", dataType='" + dataType + '\'' +

@@ -30,7 +30,7 @@ public class _FormTest {
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @Before
-    public void prepareFormDef() {
+    public void prepareFormDef() throws JsonProcessingException {
 
         FormDefinition formDef = new FormDefinition();
         formDef.setName("弼马温入职表");
@@ -45,7 +45,7 @@ public class _FormTest {
         field_name.setName("name");
         field_name.setDataType("String_");   // TODO 应该定义好类型字典
         field_name.setIsStandard(1);
-        field_name.setFormDef(formDef);
+        field_name.setFormDefId(formDef.getId());
 
         // 电话
         FieldDefinition field_phone = new FieldDefinition();
@@ -55,7 +55,7 @@ public class _FormTest {
         field_phone.setDataType("String_");
         field_phone.setIsStandard(1);
         field_phone.setPattern("phone");
-        field_phone.setFormDef(formDef);
+        field_phone.setFormDefId(formDef.getId());
 
         // 邮箱
         FieldDefinition field_email = new FieldDefinition();
@@ -65,7 +65,7 @@ public class _FormTest {
         field_email.setDataType("String_");
         field_email.setIsStandard(1);
         field_email.setPattern("email");
-        field_email.setFormDef(formDef);
+        field_email.setFormDefId(formDef.getId());
 
         // 年龄
         FieldDefinition field_age = new FieldDefinition();
@@ -74,7 +74,7 @@ public class _FormTest {
         field_age.setName("age");
         field_age.setDataType("int_");
         field_age.setIsStandard(1);
-        field_age.setFormDef(formDef);
+        field_age.setFormDefId(formDef.getId());
 
         // 公司
         FieldDefinition field_company = new FieldDefinition();
@@ -83,7 +83,7 @@ public class _FormTest {
         field_company.setName("company");
         field_company.setDataType("String_");
 //        field_age.setIsStandard(1);
-        field_company.setFormDef(formDef);
+        field_company.setFormDefId(formDef.getId());
 
 
         // 年龄
@@ -93,7 +93,7 @@ public class _FormTest {
         field_married.setName("married");
         field_married.setDataType("String_");
         field_married.setIsStandard(1);
-        field_married.setFormDef(formDef);
+        field_married.setFormDefId(formDef.getId());
 
 
         // 年龄
@@ -103,7 +103,7 @@ public class _FormTest {
         field_address.setName("address");
         field_address.setDataType("String_");
         field_address.setIsStandard(1);
-        field_address.setFormDef(formDef);
+        field_address.setFormDefId(formDef.getId());
 
 
         formDef.addFieldDef(field_name);
@@ -118,6 +118,9 @@ public class _FormTest {
         formDefMgr.addFormDef(formDef);
 
         System.out.println(formDefMgr.queryPage());
+        System.out.println("=====addFormDef入参 json格式=======");
+        System.out.println(objectMapper.writeValueAsString(formDef));
+        System.out.println("=====addFormDef入参 json格式=======");
     }
 
     @Test
