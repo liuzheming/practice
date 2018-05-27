@@ -13,6 +13,16 @@ public class FormDefinition {
 
     private String desc;
 
+    private int online;
+
+    public int getOnline() {
+        return online;
+    }
+
+    public void setOnline(int online) {
+        this.online = online;
+    }
+
     public void addFieldDef(FieldDefinition fieldDef) {
         fieldDefList.add(fieldDef);
     }

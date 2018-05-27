@@ -2,12 +2,8 @@ package form;
 
 public interface FormService {
 
-    void verifyForm(FormInstance formInst);
-
+    boolean verifyForm(FormInstance formInst) throws RuntimeException;
 
     void saveForm(FormInstance formInst);
-
-
-
 
 }
