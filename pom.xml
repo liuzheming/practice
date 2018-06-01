@@ -67,6 +67,18 @@
                 <artifactId>maven-war-plugin</artifactId>
             </plugin>
         </plugins>
+        <resources>
+            <!-- 这种方式可以将JAR包引入，还不清楚原因，待研究 -->
+            <resource>
+                <targetPath>lib/</targetPath>
+                <directory>lib/</directory>
+                <includes>
+                    <include>**/algs4.jar</include>
+                </includes>
+            </resource>
+        </resources>
+
+
     </build>
     <profiles>
         <profile>
