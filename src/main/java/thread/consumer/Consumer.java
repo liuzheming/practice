@@ -17,14 +17,14 @@ class Consumer implements Runnable {
      * 每消费一个产品,休息若干秒
      */
     public void run() {
-        for (int i = 0; i < 10; i++) {
+        while (true) {
             Product p = productBox.pop();
             System.out.println("consume : " + p);
-        }
-        try {
-            Thread.sleep((int) (Math.random() * 1000)); // 暂停线程但不出让CPU
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+//            try {
+//                Thread.sleep((int) (Math.random() * 1000)); // 暂停线程但不出让CPU
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
         }
     }
 }

@@ -9,7 +9,7 @@ class ProductBox {
 
     private Product[] productBox = new Product[6];
 
-    private int index = 0;
+    int index = 0;
 
     ProductBox() {
         super();

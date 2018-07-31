@@ -18,18 +18,18 @@ class Producer implements Runnable {
      * 每生产一个产品,休息若干秒
      */
     public void run() {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 1000; i++) {
             Product p = new Product(i);
             productBox.push(p);
             System.out.println("produce : " + p);
-            try {
-                /*
-                 Thread.sleep() 使当前线程暂停一段时间,但是并不会释放锁
-                 */
-                Thread.sleep((int) (Math.random() * 200));
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                /*
+//                 Thread.sleep() 使当前线程暂停一段时间,但是并不会释放锁
+//                 */
+//                Thread.sleep((int) (Math.random() * 200));
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
         }
     }
 }
