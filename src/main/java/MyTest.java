@@ -1,3 +1,4 @@
+import edu.princeton.cs.algs4.StdDraw;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -48,6 +49,19 @@ public class MyTest {
             e.printStackTrace();
         }
 
+    }
+
+    @Test
+    public void printTest() {
+        int n = 10000;
+        StdDraw.setXscale(0, n);
+        StdDraw.setYscale(0, n * n);
+        StdDraw.setPenRadius(.01);
+        for (int i = 1; i <= n; i++) {
+            StdDraw.point(i, i);
+            StdDraw.point(i, i * i);
+            StdDraw.point(i, i * Math.log(i));
+        }
     }
 
 
