@@ -19,7 +19,7 @@ class Consumer implements Runnable {
     public void run() {
         for (int i = 0; i < 10; i++) {
             Product p = productBox.pop();
-            System.out.println("comsume : " + p);
+            System.out.println("consume : " + p);
         }
         try {
             Thread.sleep((int) (Math.random() * 1000)); // 暂停线程但不出让CPU
