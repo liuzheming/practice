@@ -5,32 +5,37 @@ import java.util.Set;
 
 public class Graph {
 
-    private int nodeCount;
+    private int V;
 
-    private int edgeCount;
+    private int E;
 
-    private Set<Integer>[] table;
+    private Set<Integer>[] adj;
 
-    public Graph(int nodeSize) {
-        nodeCount = nodeSize;
-        table = (Set<Integer>[]) new HashSet[nodeCount];
-        for (int i = 0; i < nodeSize; i++) {
-            table[i] = new HashSet<>();
+    public Graph(int v) {
+        V = v;
+        E = 0;
+        adj = (Set<Integer>[]) new HashSet[v];
+        for (int i = 0; i < v; i++) {
+            adj[i] = new HashSet<>();
         }
     }
 
-    public void addEdge(int start, int end) {
-        table[start].add(end);
-        table[end].add(start);
-        edgeCount++;
+    public void addEdge(int v, int w) {
+        adj[v].add(w);
+        adj[w].add(v);
+        E++;
     }
 
-    public int nodeCount() {
-        return nodeCount;
+    public int V() {
+        return V;
     }
 
-    public int edgeCount() {
-        return edgeCount;
+    public int E() {
+        return E;
+    }
+
+    public Iterable<Integer> adj(int v) {
+        return adj[v];
     }
 
 }
