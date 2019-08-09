@@ -12,6 +12,7 @@ import akka.actor.ActorSystem;
  */
 public class IotMain {
 
+  static ActorSystem system = ActorSystem.create("iot-system");
 
   public static void main(String... args) throws Exception {
 

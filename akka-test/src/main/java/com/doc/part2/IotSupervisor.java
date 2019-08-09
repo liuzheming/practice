@@ -2,7 +2,8 @@ package com.doc.part2;
 
 import akka.actor.AbstractActor;
 import akka.actor.Props;
-import lombok.extern.slf4j.Slf4j;
+import akka.event.Logging;
+import akka.event.LoggingAdapter;
 
 /**
  * Description:
@@ -11,8 +12,10 @@ import lombok.extern.slf4j.Slf4j;
  * @author simon
  * @date 2019/08/09.
  */
-@Slf4j
 public class IotSupervisor extends AbstractActor {
+
+  private final LoggingAdapter log = Logging.getLogger(getContext().getSystem(), this);
+
 
   public static Props props() {
     return Props.create(IotSupervisor.class, IotSupervisor::new);
