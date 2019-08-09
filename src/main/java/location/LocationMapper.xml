@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
-        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+  "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 
-<mapper namespace="com.ultra.uam.inspect.location.LocationMapper">
-
-
-    <!-- 嵌套查询：-->
-    <!--<select id="findByAppKey" parameterType="string" resultMap="AppDetail">-->
-    <!--SELECT * FROM app_info a LEFT JOIN url_filter u  ON u.app_info_id=a.app_info_id WHERE appKey=#{appKey};-->
-    <!--</select>-->
+<mapper namespace="location.LocationMapper">
 
 
-    <!-- 嵌套查询：-->
-    <select id="getAll" resultType="com.ultra.uam.inspect.location.Location">
-        SELECT
+  <!-- 嵌套查询：-->
+  <!--<select id="findByAppKey" parameterType="string" resultMap="AppDetail">-->
+  <!--SELECT * FROM app_info a LEFT JOIN url_filter u  ON u.app_info_id=a.app_info_id WHERE appKey=#{appKey};-->
+  <!--</select>-->
+
+
+  <!-- 嵌套查询：-->
+  <select id="getAll" resultType="location.Location">
+    SELECT
 			id 					AS provinceId,
 			areaname			AS province,
 			cityName 			AS city,
