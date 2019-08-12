@@ -9,6 +9,11 @@ import java.util.Optional;
 /**
  * Description:
  *
+ * the tasks of device actor:
+ * 1. Collect temperature measurement
+ * 2. When asked, report the last measured temperature
+ *
+ *
  * Created by lzm on 2019/8/9.
  */
 public class Device extends AbstractActor {
@@ -36,9 +41,12 @@ public class Device extends AbstractActor {
     public ReadTemperature(Long requestId) {
       this.requestId = requestId;
     }
-
   }
 
+
+  /**
+   * A msg with current temperature be send to a client who asked
+   */
   public static final class RespondTemperature {
 
     public final Optional<Double> value;
@@ -51,6 +59,9 @@ public class Device extends AbstractActor {
     }
   }
 
+  /**
+   * A msg to report temperature to device actor
+   */
   public static final class RecordTemperature {
 
     final Double value;
@@ -63,6 +74,10 @@ public class Device extends AbstractActor {
     }
   }
 
+
+  /**
+   * A msg to response RecordTemperature
+   */
   public static final class TemperatureRecorded {
 
     public final long requestId;
@@ -70,6 +85,25 @@ public class Device extends AbstractActor {
     public TemperatureRecorded(Long requestId) {
       this.requestId = requestId;
     }
+  }
+
+
+  public static final class RequestTrackDevice {
+
+    public final String groupId;
+
+    public final String deviceId;
+
+    public RequestTrackDevice(String groupId, String deviceId) {
+      this.groupId = groupId;
+      this.deviceId = deviceId;
+    }
+
+  }
+
+
+  public static final class DeviceRegistered {
+
   }
 
 
@@ -89,6 +123,15 @@ public class Device extends AbstractActor {
   @Override
   public Receive createReceive() {
     return receiveBuilder()
+        // Adding registration support to device actors
+        .match(RequestTrackDevice.class, e -> {
+          if (groupId.equals(e.groupId) && deviceId.equals(e.deviceId)) {
+            getSender().tell(new DeviceRegistered(), getSelf());
+          } else {
+            log.warning("Ignoring TrackDevice request for {}-{}, "
+                + "this actor is responsible for {}-{}.", e.groupId, e.deviceId, groupId, deviceId);
+          }
+        })
         .match(ReadTemperature.class, e -> {
           getSender()
               .tell(new RespondTemperature(e.requestId, lastTemperatureReading), getSelf());

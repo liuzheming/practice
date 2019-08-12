@@ -7,7 +7,9 @@ import akka.actor.Props;
 
 /**
  * Description:
- * <p>
+ *
+ * In this case, we can see that after failure the supervised actor is stopped and
+ * restarted immediately.
  *
  * @author simon
  * @date 2019/08/09.
