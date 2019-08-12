@@ -1,4 +1,4 @@
-package com.doc.part3;
+package com.doc.sample.iot;
 
 import akka.actor.AbstractActor;
 import akka.actor.Props;
