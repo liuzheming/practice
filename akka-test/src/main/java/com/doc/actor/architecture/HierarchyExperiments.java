@@ -1,4 +1,4 @@
-package com.doc.part1;
+package com.doc.actor.architecture;
 
 import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
