@@ -87,26 +87,6 @@ public class Device extends AbstractActor {
     }
   }
 
-
-  public static final class RequestTrackDevice {
-
-    public final String groupId;
-
-    public final String deviceId;
-
-    public RequestTrackDevice(String groupId, String deviceId) {
-      this.groupId = groupId;
-      this.deviceId = deviceId;
-    }
-
-  }
-
-
-  public static final class DeviceRegistered {
-
-  }
-
-
   Optional<Double> lastTemperatureReading = Optional.empty();
 
 
@@ -124,9 +104,9 @@ public class Device extends AbstractActor {
   public Receive createReceive() {
     return receiveBuilder()
         // Adding registration support to device actors
-        .match(RequestTrackDevice.class, e -> {
+        .match(DeviceManager.RequestTrackDevice.class, e -> {
           if (groupId.equals(e.groupId) && deviceId.equals(e.deviceId)) {
-            getSender().tell(new DeviceRegistered(), getSelf());
+            getSender().tell(new DeviceManager.DeviceRegistered(), getSelf());
           } else {
             log.warning("Ignoring TrackDevice request for {}-{}, "
                 + "this actor is responsible for {}-{}.", e.groupId, e.deviceId, groupId, deviceId);

@@ -5,6 +5,7 @@ import akka.actor.ActorSystem;
 import akka.testkit.TestKit;
 import com.doc.sample.iot.Device;
 import com.doc.sample.iot.Device.RecordTemperature;
+import com.doc.sample.iot.DeviceManager;
 import java.util.Optional;
 import org.junit.Assert;
 import org.junit.Test;
@@ -36,5 +37,43 @@ public class IotTest {
     Assert.assertEquals(12307L, temperature.requestId);
 
   }
+
+
+  @Test
+  public void testReplyRegistrationRequests() {
+
+    TestKit probe = new TestKit(system);
+    ActorRef device = system.actorOf(Device.props("UFO", "U1"));
+    device.tell(new DeviceManager.RequestTrackDevice("UFO", "U1"), probe.testActor());
+    probe.expectMsgClass(DeviceManager.DeviceRegistered.class);
+    Assert.assertEquals(device, probe.lastSender());
+
+  }
+
+
+  @Test
+  public void testWrongRegistrationRequests() {
+
+    TestKit probe = new TestKit(system);
+    ActorRef deviceActor = system.actorOf(Device.props("UFO", "U1"));
+    deviceActor.tell(new DeviceManager.RequestTrackDevice("UFO", "U2"), probe.testActor());
+    probe.expectNoMessage();
+    deviceActor.tell(new DeviceManager.RequestTrackDevice("UFO2", "U1"), probe.testActor());
+    probe.expectNoMessage();
+
+  }
+
+
+  @Test
+  public void testRegisterDeviceActor() {
+
+  }
+
+
+  @Test
+  public void testIgnoringRequest4WrongGroupId() {
+
+  }
+
 
 }
