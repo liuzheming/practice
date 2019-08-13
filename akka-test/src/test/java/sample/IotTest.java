@@ -161,9 +161,6 @@ public class IotTest {
     toShutDown.tell(PoisonPill.getInstance(), ActorRef.noSender());
     probe.expectTerminated(toShutDown, Duration.apply(3, "s"));
 
-    // using awaitAssert to retry because it might take longer for groupActor
-    // to see the Terminated, that order is undefined
-
     groupActor.tell(new DeviceGroup.RequestDeviceList(1L), probe.testActor());
     DeviceGroup.ReplyDeviceList r = probe.expectMsgClass(DeviceGroup.ReplyDeviceList.class);
     Assert.assertEquals(1L, r.requestId);
