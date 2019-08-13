@@ -5,6 +5,7 @@ import akka.actor.ActorSystem;
 import akka.testkit.TestKit;
 import com.doc.sample.iot.Device;
 import com.doc.sample.iot.Device.RecordTemperature;
+import com.doc.sample.iot.DeviceGroup;
 import com.doc.sample.iot.DeviceManager;
 import java.util.Optional;
 import org.junit.Assert;
@@ -67,13 +68,43 @@ public class IotTest {
   @Test
   public void testRegisterDeviceActor() {
 
+    TestKit probe = new TestKit(system);
+    ActorRef groupActor = system.actorOf(DeviceGroup.props("GROUP"), "GROUP-UFO");
+    groupActor.tell(new DeviceManager.RequestTrackDevice("GROUP", "U1"), probe.testActor());
+    probe.expectMsgClass(DeviceManager.DeviceRegistered.class);
+    ActorRef device1 = probe.lastSender();
+
+    groupActor.tell(new DeviceManager.RequestTrackDevice("GROUP", "U2"), probe.testActor());
+    probe.expectMsgClass(DeviceManager.DeviceRegistered.class);
+    ActorRef device2 = probe.lastSender();
+
+    Assert.assertNotEquals(device1, device2);
   }
 
 
   @Test
   public void testIgnoringRequest4WrongGroupId() {
 
+    TestKit probe = new TestKit(system);
+    ActorRef groupActor = system.actorOf(DeviceGroup.props("GROUP"), "GROUP-UFO");
+    groupActor.tell(new DeviceManager.RequestTrackDevice("GROUP1", "DEVICE"), probe.testActor());
+    probe.expectNoMessage();
+
   }
 
+
+  @Test
+  public void testReturnSameActorForSameDeviceId() {
+
+    TestKit probe = new TestKit(system);
+    ActorRef groupActor = system.actorOf(DeviceGroup.props("GROUP"), "GROUP-UFO");
+    groupActor.tell(new DeviceManager.RequestTrackDevice("GROUP", "U1"), probe.testActor());
+    probe.expectMsgClass(DeviceManager.DeviceRegistered.class);
+    ActorRef device1 = probe.lastSender();
+    groupActor.tell(new DeviceManager.RequestTrackDevice("GROUP", "U1"), probe.testActor());
+    probe.expectMsgClass(DeviceManager.DeviceRegistered.class);
+    ActorRef device2 = probe.lastSender();
+    Assert.assertEquals(device1, device2);
+  }
 
 }
