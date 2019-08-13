@@ -3,10 +3,12 @@ package com.doc.sample.iot;
 import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
 import akka.actor.Props;
+import akka.actor.Terminated;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Description:
@@ -33,6 +35,7 @@ public class DeviceGroup extends AbstractActor {
 
 
   final Map<String, ActorRef> deviceIdToActor = new HashMap<>();
+  final Map<ActorRef, String> actorToDeviceId = new HashMap<>();
 
 
   @Override
@@ -45,32 +48,68 @@ public class DeviceGroup extends AbstractActor {
     log.info("device group stopped");
   }
 
+  public static final class RequestDeviceList {
 
-  public void onTrackDevice(DeviceManager.RequestTrackDevice trackMsg) {
+    final long requestId;
+
+    public RequestDeviceList(long requestId) {
+      this.requestId = requestId;
+    }
+  }
+
+  public static final class ReplyDeviceList {
+
+    public final long requestId;
+
+    public final Set<String> ids;
+
+    public ReplyDeviceList(long requestId, Set<String> ids) {
+      this.requestId = requestId;
+      this.ids = ids;
+    }
+
+  }
+
+  private void onTrackDevice(DeviceManager.RequestTrackDevice trackMsg) {
 
     if (this.groupId.equals(trackMsg.groupId)) {
-      ActorRef deviceRef = this.deviceIdToActor.get(trackMsg.deviceId);
-      if (deviceRef != null) {
-        deviceRef.forward(trackMsg, getContext());
+      ActorRef deviceActor = this.deviceIdToActor.get(trackMsg.deviceId);
+      if (deviceActor != null) {
+        deviceActor.forward(trackMsg, getContext());
       } else {
         log.info("create device actor for {}", trackMsg.deviceId);
-        deviceRef = getContext().actorOf(Device.props(trackMsg.groupId, trackMsg.deviceId),
+        deviceActor = getContext().actorOf(Device.props(trackMsg.groupId, trackMsg.deviceId),
             "track-" + trackMsg.deviceId);
-        deviceIdToActor.put(trackMsg.deviceId, deviceRef);
-        deviceRef.forward(trackMsg, getContext());
-
+        deviceIdToActor.put(trackMsg.deviceId, deviceActor);
+        actorToDeviceId.put(deviceActor, trackMsg.deviceId);
+        deviceActor.forward(trackMsg, getContext());
+        getContext().watch(deviceActor);
       }
     } else {
       log.warning("Ignoring trackDevice request for {}. this actor is responsible for {}",
           groupId, trackMsg.deviceId);
     }
-
   }
 
 
+  private void onTerminated(Terminated t) {
+    ActorRef deviceActor = t.getActor();
+    String deviceId = actorToDeviceId.get(deviceActor);
+    log.info("device actor for {} has been terminated", deviceId);
+    actorToDeviceId.remove(deviceActor);
+    deviceIdToActor.remove(deviceId);
+  }
+
+  private void onDeviceList(RequestDeviceList req) {
+    getSender().tell(new ReplyDeviceList(req.requestId, deviceIdToActor.keySet()), getSelf());
+  }
+
   @Override
   public Receive createReceive() {
-    return receiveBuilder().match(DeviceManager.RequestTrackDevice.class, this::onTrackDevice).
-        build();
+    return receiveBuilder()
+        .match(DeviceManager.RequestTrackDevice.class, this::onTrackDevice)
+        .match(Terminated.class, this::onTerminated)
+        .match(RequestDeviceList.class, this::onDeviceList)
+        .build();
   }
 }

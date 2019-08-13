@@ -2,20 +2,26 @@ package sample;
 
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
+import akka.actor.PoisonPill;
 import akka.testkit.TestKit;
 import com.doc.sample.iot.Device;
 import com.doc.sample.iot.Device.RecordTemperature;
 import com.doc.sample.iot.DeviceGroup;
 import com.doc.sample.iot.DeviceManager;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
+import scala.concurrent.duration.Duration;
 
 /**
  * Description:
  *
  * Created by lzm on 2019/8/9.
  */
+@Slf4j
 public class IotTest {
 
 
@@ -105,6 +111,65 @@ public class IotTest {
     probe.expectMsgClass(DeviceManager.DeviceRegistered.class);
     ActorRef device2 = probe.lastSender();
     Assert.assertEquals(device1, device2);
+  }
+
+
+  @Test
+  public void testListActiveDevices() {
+    TestKit probe = new TestKit(system);
+    ActorRef groupActor = system.actorOf(DeviceGroup.props("GROUP"), "GROUP-UFO");
+    groupActor.tell(new DeviceManager.RequestTrackDevice("GROUP", "U1"), probe.testActor());
+    probe.expectMsgClass(DeviceManager.DeviceRegistered.class);
+    groupActor.tell(new DeviceManager.RequestTrackDevice("GROUP", "U2"), probe.testActor());
+    probe.expectMsgClass(DeviceManager.DeviceRegistered.class);
+    groupActor.tell(new DeviceManager.RequestTrackDevice("GROUP", "U3"), probe.testActor());
+    probe.expectMsgClass(DeviceManager.DeviceRegistered.class);
+    groupActor.tell(new DeviceGroup.RequestDeviceList(112L), probe.testActor());
+    DeviceGroup.ReplyDeviceList reply = probe
+        .expectMsgClass(DeviceGroup.ReplyDeviceList.class);
+    log.info("testListActiveDevices [requestId:{}, deviceList:{}]",
+        reply.requestId, reply.ids);
+    Assert.assertEquals(112L, reply.requestId);
+    Assert.assertEquals(Stream.of("U1", "U2", "U3").collect(Collectors.toSet()), reply.ids);
+  }
+
+
+  @Test
+  public void testListActiveDevicesAfterOneShutdown() {
+    TestKit probe = new TestKit(system);
+//    ActorRef deviceManager = system.actorOf(DeviceManager.props(), "DeviceManager");
+    ActorRef groupActor = system.actorOf(DeviceGroup.props("GROUP"), "GROUP-UFO");
+    groupActor.tell(new DeviceManager.RequestTrackDevice("GROUP", "U1"), probe.testActor());
+    probe.expectMsgClass(DeviceManager.DeviceRegistered.class);
+    ActorRef toShutDown = probe.lastSender();
+    groupActor.tell(new DeviceManager.RequestTrackDevice("GROUP", "U2"), probe.testActor());
+    probe.expectMsgClass(DeviceManager.DeviceRegistered.class);
+    groupActor.tell(new DeviceManager.RequestTrackDevice("GROUP", "U3"), probe.testActor());
+    probe.expectMsgClass(DeviceManager.DeviceRegistered.class);
+
+    groupActor.tell(new DeviceGroup.RequestDeviceList(112L), probe.testActor());
+    DeviceGroup.ReplyDeviceList reply = probe
+        .expectMsgClass(DeviceGroup.ReplyDeviceList.class);
+    Assert.assertEquals(112L, reply.requestId);
+    Assert.assertEquals(Stream.of("U1", "U2", "U3").collect(Collectors.toSet()), reply.ids);
+
+    /*
+     * Death Watch : Akka provide a DEATH WATCH feature that allows a actor to watch another actor
+     * and to be notified if the other actor is stopped.
+     */
+    probe.watch(toShutDown);
+    toShutDown.tell(PoisonPill.getInstance(), ActorRef.noSender());
+    probe.expectTerminated(toShutDown, Duration.apply(3, "s"));
+
+    // using awaitAssert to retry because it might take longer for groupActor
+    // to see the Terminated, that order is undefined
+
+    groupActor.tell(new DeviceGroup.RequestDeviceList(1L), probe.testActor());
+    DeviceGroup.ReplyDeviceList r = probe.expectMsgClass(DeviceGroup.ReplyDeviceList.class);
+    Assert.assertEquals(1L, r.requestId);
+    Assert.assertEquals(Stream.of("U2", "U3").collect(Collectors.toSet()), r.ids);
+
+
   }
 
 }
