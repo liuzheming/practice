@@ -62,9 +62,9 @@ public class DeviceGroup extends AbstractActor {
 
   public static final class RespondAllTemperatures {
 
-    final long requestId;
+    public final long requestId;
 
-    final Map<String, TemperatureReading> temperatures;
+    public final Map<String, TemperatureReading> temperatures;
 
     public RespondAllTemperatures(long requestId, Map<String, TemperatureReading> temperatures) {
       this.requestId = requestId;

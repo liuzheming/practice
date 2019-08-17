@@ -20,14 +20,11 @@ import scala.concurrent.duration.FiniteDuration;
  */
 public class DeviceGroupQuery extends AbstractActor {
 
-
   public static final class CollectionTimeout {
 
   }
 
-
   private final LoggingAdapter log = Logging.getLogger(getContext().getSystem(), this);
-
 
   final Map<ActorRef, String> actorToDeviceId;
 
