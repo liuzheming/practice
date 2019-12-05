@@ -1,4 +1,4 @@
-package memory.jvm;
+package memory.jvm.exception;
 
 import lombok.extern.slf4j.Slf4j;
 

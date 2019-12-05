@@ -1,4 +1,4 @@
-package memory.jvm;
+package memory.jvm.exception;
 
 import java.util.ArrayList;
 import java.util.List;

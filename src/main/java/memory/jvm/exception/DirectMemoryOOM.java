@@ -1,4 +1,4 @@
-package memory.jvm;
+package memory.jvm.exception;
 
 import java.lang.reflect.Field;
 import sun.misc.Unsafe;

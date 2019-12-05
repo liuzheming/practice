@@ -1,4 +1,4 @@
-package memory.jvm;
+package memory.jvm.exception;
 
 import java.lang.reflect.Method;
 import java.nio.file.attribute.AclEntryPermission;
