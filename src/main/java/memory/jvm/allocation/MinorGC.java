@@ -6,8 +6,8 @@ package memory.jvm.allocation;
  * 转入老年代的规则:
  * 1. 老年代的连续空闲区域是否足以应对新生代对象全部存活的情况
  * 2. 老年代的连续空间区域是否大于历次升级对象大小的平均值
- * 如果两条都不符合,则直接出发FullGC
- * 如果两条中有一条符合,则出发MinorGC,并将对象向老年代升级
+ * 如果两条都不符合,则直接触发FullGC
+ * 如果两条中有一条符合,则触发MinorGC----清理死亡的对象并把eden中存活的对象转入survivor区or老年代。
  *
  * VM Args: -verbose:gc -Xms20M  -Xmx20M -Xmn:10M -XX:+PrintGCDetails -XX:SurvivorRatio=8
  *
