@@ -1,0 +1,10 @@
+/Users/liuzheming01/Documents/Idea-Project/practice/jvm-test/src/main/java/memory/jvm/exception/DirectMemoryOOM.java
+/Users/liuzheming01/Documents/Idea-Project/practice/jvm-test/src/main/java/memory/jvm/allocation/TenuringThreshold.java
+/Users/liuzheming01/Documents/Idea-Project/practice/jvm-test/src/main/java/memory/leak/ClassLoaderLeakException.java
+/Users/liuzheming01/Documents/Idea-Project/practice/jvm-test/src/main/java/memory/jvm/exception/RuntimeConstantPoolOOM.java
+/Users/liuzheming01/Documents/Idea-Project/practice/jvm-test/src/main/java/memory/jvm/exception/HeapOOM.java
+/Users/liuzheming01/Documents/Idea-Project/practice/jvm-test/src/main/java/memory/jvm/allocation/PretenureSizeThreshold.java
+/Users/liuzheming01/Documents/Idea-Project/practice/jvm-test/src/main/java/memory/jvm/exception/JavaVMStackSOF.java
+/Users/liuzheming01/Documents/Idea-Project/practice/jvm-test/src/main/java/memory/jvm/allocation/MinorGC.java
+/Users/liuzheming01/Documents/Idea-Project/practice/jvm-test/src/main/java/memory/jvm/exception/JavaVMStackOOM.java
+/Users/liuzheming01/Documents/Idea-Project/practice/jvm-test/src/main/java/memory/jvm/exception/JavaMethodAreaOOM.java
