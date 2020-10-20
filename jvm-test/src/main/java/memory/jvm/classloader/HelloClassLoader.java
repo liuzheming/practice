@@ -38,6 +38,9 @@ public class HelloClassLoader extends ClassLoader {
     }
   }
 
+  /**
+   * 将文件读取为byte[],再将每个byte取反
+   */
   @Override
   protected Class<?> findClass(String name) throws ClassNotFoundException {
 
@@ -52,7 +55,7 @@ public class HelloClassLoader extends ClassLoader {
 
     byte[] bytes = new byte[(int) file.length()];
     for (int i = 0; i < bytes.length; i++) {
-      bytes[i] = (byte) ((byte) 255 - byteArr[i]);
+      bytes[i] = (byte) (~byteArr[i]);
     }
 
     return defineClass(name, bytes, 0, bytes.length);
