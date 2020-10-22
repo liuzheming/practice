@@ -12,6 +12,7 @@
         <module>akka-test</module>
         <module>jvm-test</module>
         <module>threadsafe-cache</module>
+        <module>java8</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
