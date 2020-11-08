@@ -5,6 +5,8 @@ import org.junit.runners.MethodSorters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.LinkedHashMap;
+
 
 /**
  * Create by lzm on 2019/12/16
@@ -16,6 +18,8 @@ public class LruCacheTest {
 
     private static Logger LOG = LoggerFactory.getLogger(LruCacheTest.class); // .getLogger(LruCacheTest.class.getName
     // ());
+
+    private LinkedHashMap lhm = new LinkedHashMap();
 
 
     /**
