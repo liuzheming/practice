@@ -1,5 +1,7 @@
 package lock;
 
+import java.util.Hashtable;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -29,6 +31,8 @@ public class NewLockThread implements Runnable {
     private ReentrantLock lock = new ReentrantLock();
 
     private ConcurrentHashMap syncMap = new ConcurrentHashMap();
+
+    private Map table = new Hashtable();
 
     @Override
     public void run() {
