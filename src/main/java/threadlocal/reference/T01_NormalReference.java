@@ -20,6 +20,7 @@ public class T01_NormalReference {
         SoftReference<byte[]> softBytesRef = new SoftReference<>(new byte[1024]);
 
         // 弱，GC直接回收
+        // ThreadLocal中有使用
         WeakReference<Integer> weakRef = new WeakReference<>(new Integer(1));
 
         // 虚，GC直接回收，比弱引用更弱，跟不存在差不多
