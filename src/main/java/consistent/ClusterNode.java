@@ -3,6 +3,7 @@ package consistent;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,22 +22,23 @@ public class ClusterNode {
     public ClusterNode(String ip) {
         this.ip = ip;
         center = new ClusterCenterImpl();
-        ZK.addNode(this);
+        center.addNode(this);
         loadDevice();
     }
 
-    private void loadDevice() {
-        for (Device device : Main.DEVICE_LIST) {
-            idToDevice.put(device.uuid, device);
+    private void registerToZk() {
+        Collection<ClusterNode> coll = ZK.addNode(this);
+        for (ClusterNode node : coll) {
+            center.addNode(node);
         }
     }
 
-    public void onClusterAddNode(ClusterNode node) {
-        center.addNode(node);
-        reloadDevices();
+    public void unregisterFromZk() {
+        center.clean();
+        ZK.delNode(this);
     }
 
-    private void reloadDevices() {
+    private void loadDevice() {
         for (Device device : Main.DEVICE_LIST) {
             ClusterNode node = resolveRoutingByDeviceId(device);
             if (node != null && !node.ip.equals(this.ip)) {
@@ -47,9 +49,14 @@ public class ClusterNode {
         }
     }
 
+    public void onClusterAddNode(ClusterNode node) {
+        center.addNode(node);
+        loadDevice();
+    }
+
     public void onClusterDelNode(String ip) {
         center.removeNode(ip);
-        reloadDevices();
+        loadDevice();
     }
 
     public void addDevice(Device device) {

@@ -11,4 +11,6 @@ public interface ClusterCenter {
 
     int getClusterSize();
 
+    void clean();
+
 }

@@ -21,10 +21,10 @@ public class Main {
         node1.printDevices();
         ClusterNode node2 = new ClusterNode("127.0.0.2");
         node2.printDevices();
-        ClusterNode node3 = new ClusterNode("127.0.0.3");
-        node3.printDevices();
+//        ClusterNode node3 = new ClusterNode("127.0.0.3");
+//        node3.printDevices();
 
-        ZK.delNode(node1);
+        node1.unregisterFromZk();
         ZK.print();
 
     }

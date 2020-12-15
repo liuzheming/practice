@@ -36,4 +36,10 @@ public class ClusterCenterImpl implements ClusterCenter {
         return idToNode.size();
     }
 
+    @Override
+    public void clean() {
+        idToNode.clear();
+    }
+
+
 }

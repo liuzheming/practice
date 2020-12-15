@@ -1,5 +1,7 @@
 package consistent;
 
+import java.util.Collection;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
@@ -11,21 +13,23 @@ import java.util.Map;
 @Slf4j
 public class ZK {
 
-    public static Map<String, ClusterNode> ID_TO_NODE = new HashMap<>();
+    public static Map<String, ClusterNode> IP_TO_NODE = new HashMap<>();
 
-    public static void addNode(ClusterNode node) {
-        ID_TO_NODE.put(node.ip, node);
-        for (Map.Entry<String, ClusterNode> entry : ID_TO_NODE.entrySet()) {
+    public static Collection<ClusterNode> addNode(ClusterNode node) {
+        Collection<ClusterNode> registyNode =  IP_TO_NODE.values();
+        IP_TO_NODE.put(node.ip, node);
+        for (Map.Entry<String, ClusterNode> entry : IP_TO_NODE.entrySet()) {
             if (!node.ip.equals(entry.getKey())) {
                 entry.getValue().onClusterAddNode(node);
             }
         }
         print();
+      return registyNode;
     }
 
     public static void delNode(ClusterNode node) {
-        ID_TO_NODE.remove(node.ip);
-        for (Map.Entry<String, ClusterNode> entry : ID_TO_NODE.entrySet()) {
+        IP_TO_NODE.remove(node.ip);
+        for (Map.Entry<String, ClusterNode> entry : IP_TO_NODE.entrySet()) {
             if (!node.ip.equals(entry.getKey())) {
                 entry.getValue().onClusterDelNode(node.ip);
             }
@@ -34,6 +38,6 @@ public class ZK {
     }
 
     public static void print() {
-        log.info("ZK [" + ID_TO_NODE + "]");
+        log.info("ZK [" + IP_TO_NODE + "]");
     }
 }
