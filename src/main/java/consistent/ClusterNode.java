@@ -28,7 +28,7 @@ public class ClusterNode {
         this.hash = getHash(ip);
         center = new ClusterCenterImpl(ip);
         center.addNode(this);
-        ZK.addNode(this);
+        registerToZk();
         loadDevice();
     }
 
@@ -60,8 +60,8 @@ public class ClusterNode {
         loadDevice();
     }
 
-    public void onClusterDelNode(String ip) {
-        center.removeNode(ip);
+    public void onClusterDelNode(ClusterNode node) {
+        center.removeNode(node);
         loadDevice();
     }
 
