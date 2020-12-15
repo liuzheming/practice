@@ -78,14 +78,22 @@ public class ClusterNode {
         // 计算每个设备的hash值，与node的hash值进行对比，设备应当归属于hash值比它大的第一个节点
         int hash = getHash(device.uuid);
 
+        device.hash = hash;
+        if (center.getAllNodes().containsKey(hash)) {
+            return center.getAllNodes().get(hash);
+        }
         SortedMap<Integer, ClusterNode> tailMap = center.getAllNodes().tailMap(hash);
         // 返回计算得到的node节点
-        if (tailMap.size() == 0) {
-            return center.getAllNodes().get(center.getAllNodes().firstKey());
-        }
-        return tailMap.get(tailMap.firstKey());
+        int key = tailMap.size() == 0 ? tailMap.firstKey() : center.getAllNodes().firstKey();
+        return center.getAllNodes().get(key);
     }
 
+    /**
+     * 使用FNV1_32_HASH算法计算服务器的Hash值,这里不使用重写hashCode的方法，最终效果没区别
+     *
+     * @param str
+     * @return
+     */
     private static int getHash(String str) {
         final int p = 16777619;
         int hash = (int) 2166136261L;

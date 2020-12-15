@@ -54,7 +54,7 @@ public class ClusterCenterImpl implements ClusterCenter {
 
     @Override
     public void clean() {
-        idToNode.clear();
+        hashToNode.clear();
     }
 
 

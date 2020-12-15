@@ -7,7 +7,12 @@ public class Device {
 
     public String uuid;
 
-    public Device(String uuid) {
+    public int hash;
+
+    public String name;
+
+    public Device(String name, String uuid) {
+        this.name = name;
         this.uuid = uuid;
     }
 
@@ -15,6 +20,8 @@ public class Device {
     public String toString() {
         return "Device{" +
                 "uuid='" + uuid + '\'' +
+                ", hash=" + hash +
+                ", name='" + name + '\'' +
                 '}';
     }
 }
