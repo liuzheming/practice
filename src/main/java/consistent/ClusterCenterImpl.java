@@ -1,11 +1,10 @@
 package consistent;
 
-import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 /**
  * Create by lzm on 2020/12/15
@@ -13,28 +12,45 @@ import java.util.Map;
 @Slf4j
 public class ClusterCenterImpl implements ClusterCenter {
 
-    private Map<String, ClusterNode> idToNode = new HashMap<>();
+    public SortedMap<Integer, ClusterNode> hashToNode = new TreeMap<>();
 
-    @Override
-    public void addNode(ClusterNode clusterNode) {
-        if (clusterNode != null && !StringUtils.isEmpty(clusterNode.ip)) {
-            idToNode.put(clusterNode.ip, clusterNode);
-        }
-        log.info("on node added,ip:{}", clusterNode.ip);
+    public String ip;
+
+    public ClusterCenterImpl(String ip) {
+        this.ip = ip;
     }
 
     @Override
-    public void removeNode(String ip) {
-        if (!StringUtils.isEmpty(ip)) {
-            idToNode.remove(ip);
+    public String getNodeIP() {
+        return ip;
+    }
+
+    @Override
+    public void addNode(ClusterNode clusterNode) {
+        if (clusterNode != null) {
+            log.info("on node added,ip:{}", clusterNode.ip);
+            if (!StringUtils.isEmpty(clusterNode.ip)) {
+                hashToNode.put(clusterNode.hash, clusterNode);
+            }
         }
-        log.info("on node deleted,ip:{}", ip);
+    }
+
+    @Override
+    public void removeNode(ClusterNode node) {
+        hashToNode.remove(node.hash);
+        log.info("on node deleted,ip:{}", node);
     }
 
     @Override
     public int getClusterSize() {
-        return idToNode.size();
+        return hashToNode.size();
     }
+
+    @Override
+    public SortedMap<Integer, ClusterNode> getAllNodes() {
+        return this.hashToNode;
+    }
+
 
     @Override
     public void clean() {
