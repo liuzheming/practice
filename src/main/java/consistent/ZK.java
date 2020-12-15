@@ -27,7 +27,7 @@ public class ZK {
         ID_TO_NODE.remove(node.ip);
         for (Map.Entry<String, ClusterNode> entry : ID_TO_NODE.entrySet()) {
             if (!node.ip.equals(entry.getKey())) {
-                entry.getValue().onClusterDelNode(node.ip);
+                entry.getValue().onClusterDelNode(node);
             }
         }
         print();
