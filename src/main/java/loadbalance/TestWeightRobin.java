@@ -1,4 +1,4 @@
-package consistent;
+package loadbalance;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
