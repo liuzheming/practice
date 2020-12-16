@@ -89,6 +89,7 @@ public class ClusterNode {
     }
 
     /**
+     * murmur3_128
      * 使用FNV1_32_HASH算法计算服务器的Hash值,这里不使用重写hashCode的方法，最终效果没区别
      *
      * @param str
