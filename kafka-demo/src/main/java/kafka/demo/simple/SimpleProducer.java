@@ -15,13 +15,20 @@ import java.util.UUID;
  */
 public class SimpleProducer {
 
+
+    public static Properties getKafkaConsumerProps() {
+        Properties props = new Properties();
+        props.setProperty("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        props.setProperty("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        props.setProperty("bootstrap.servers", "10.26.37.18:9092");
+        return props;
+    }
+
+
     public static void main(String[] args) {
 
         // kafka producer 配置
-        Properties props = new Properties();
-        props.setProperty("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        props.setProperty("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        props.setProperty("bootstrap.servers", "10.26.37.18:9092");
+        Properties props = getKafkaConsumerProps();
 
         // 创建 kafka producer
         KafkaProducer<String, String> producer = new KafkaProducer<>(props);

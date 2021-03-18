@@ -17,15 +17,21 @@ import java.util.Properties;
 public class SimpleConsumer {
 
 
-    public static void main(String[] args) throws Exception {
-
-        // kafka 配置
+    public static Properties getKafkaConsumerProps() {
         Properties props = new Properties();
         props.setProperty("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.setProperty("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.setProperty("bootstrap.servers", "10.26.37.18:9092");
-        // 设置 comsumer group
         props.setProperty("group.id", "group1");
+        return props;
+    }
+
+
+    public static void main(String[] args) throws Exception {
+
+        // kafka 配置
+        // 设置 comsumer group
+        Properties props = getKafkaConsumerProps();
 
         // 创建kafka consumer 实例
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
